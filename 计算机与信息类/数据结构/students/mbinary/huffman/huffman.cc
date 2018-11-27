@@ -53,7 +53,7 @@ string uniFileName(string file)
         while(true){
             char s[3];
             n+=1;
-            snprintf(s,3,"%d",n); 
+            snprintf(s,3,"%d",n);
             file=(name+"("+s+")"+suffix);
             FILE* f=fopen(file.c_str(),"rb");
             if(!f)break;
@@ -223,7 +223,7 @@ string huffman<ky,wt>::encode(string file_name,long &charNum)
     }
     int data_size = data.size();  // calculate the size of the code_data
     char sz[numDigit];
-    snprintf(sz,numDigit,"%d",data_size); 
+    snprintf(sz,numDigit,"%d",data_size);
     int ct=0;
     for(;sz[ct];++ct)fputc(sz[ct],dst);
     fputc('\n',dst);
@@ -324,7 +324,7 @@ void go(vector<string> & names)
     for(vector<string>::iterator i=names.begin();i!=names.end();++i){
         struct timeval tv;
         gettimeofday(&tv,NULL);
-        last=tv.tv_sec;
+            last=tv.tv_sec;
         bl=handle_one(*i,originSize,compressedSize);
         indicator.push_back(bl);
         gettimeofday(&tv,NULL);
@@ -344,10 +344,10 @@ void go(vector<string> & names)
 }
 int main(int argv,char ** argc)
 {
-    char cwd[50];
-    cout<<getcwd(cwd,50)<<endl;
+    //char cwd[50];
+    //cout<<getcwd(cwd,50)<<endl;
     vector<string> names;
-    string file; 
+    string file;
     if(argv>1){
         for(int i=1;i<argv;++i){
             names.push_back(argc[i]);

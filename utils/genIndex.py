@@ -69,7 +69,7 @@ def handleDir(target = WALKDIR):
         if 'README.md' in files:
             with open(os.path.join(path,'README.md'),'r') as f :
                 #<hr>\n<span style="color:orange;text-align:center;">Read  Me</span>\n<hr>\n
-                md = '\n{% cq %} Read Me {% endcq %}\n'+f.read()
+                md = '\n<h1 style="color:red;text-align:center;" >Read Me</h1>\n'+f.read()
         cur = getPath(path)
         dirLst = genDirectoryList(path,dirs)
         fileLst = genFileList(path,files)

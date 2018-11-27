@@ -3,7 +3,8 @@ hasPinyin=False
 try:
     from pypinyin import pinyin
     hasPinyin=True
-except:pass
+except:
+    print('No module pypinyin, using defalut method to sort')
 
 def pinyinSort(items):
     if hasPinyin:

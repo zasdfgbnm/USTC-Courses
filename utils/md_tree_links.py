@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+from pinyinSort import pinyinSort
 from argparse import ArgumentParser
 
 #命令行输入参数处理
@@ -13,19 +14,6 @@ args = parser.parse_args()
 FILE = args.fileinclude
 PATH = args.path
 DEPTH = args.depth
-hasPinyin = False
-try:
-    from pypinyin import pinyin
-    hasPinyin = True
-except:
-    print('No module pypinyin, using defalut method to sort')
-
-
-def pinyinSort(items):
-    if hasPinyin:
-        dic = {''.join(sum(pinyin(i,style=0),[])).lower():i for i in items}
-        return [dic[i] for i in sorted(dic.keys())]
-    else:return items
 
 def mklink(path):
     return '* [{name}]({path})'.format(name=os.path.basename(path),path=path)

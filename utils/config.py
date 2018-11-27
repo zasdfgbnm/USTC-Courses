@@ -13,7 +13,7 @@ PATH = os.path.join(HOST,OWNER,REPO,BRANCH)
 WALKDIR = '/mnt/c/Users/mbinary/gitrepo/USTC-Course'
 
 
-TARDIR = '/mnt/d/blogfile/blog/source/ustc-cs'
+TARDIR = '/mnt/d/blogfile/source/ustc-cs'
 
 
 

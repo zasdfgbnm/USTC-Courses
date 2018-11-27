@@ -1,6 +1,0 @@
-var i,j; 
-var a,b;
-begin
-    i := -1;
-    j := i+1;
-end.
