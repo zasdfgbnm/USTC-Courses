@@ -1,0 +1,126 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+noname.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 2018/11/26  --  0:08:02 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;name:
+[   2]        :                                       ;author: mbinary
+[   3]        :                                       ;time: 2018-11
+[   4]        :                                       ;function:
+[   5]        :                                       include 'emu8086.inc'
+[   6]        :                                       include 'mymacro.inc'
+[   7]        :                                       
+[   8]        :                                       .model small
+[   9]        :                                       .stack 100h
+[  10]        :                                       .data
+[  11]        :                                       
+[  12]        :                                       
+[  13]    0100: 00 00                                 x dw 0
+[  14]        :                                       .code
+[  15]    0110: BA 10 00 8E DA                        .startup
+[  16]        :                                       
+[  17]    0115: E9 C3 00 52 50 56 B9 00 00 2E C6 06   DEFINE_SCAN_NUM       ; store in cx
+                C8 00 00 B4 00 CD 16 B4 0E CD 10 3C 
+                2D 74 69 3C 0D 75 03 E9 93 00 3C 08 
+                75 1E BA 00 00 8B C1 2E F7 36 C9 00 
+                8B C8 50 B0 20 B4 0E CD 10 58 50 B0 
+                08 B4 0E CD 10 58 EB CB 3C 30 73 02 
+                EB 04 3C 39 76 1A 50 B0 08 B4 0E CD 
+                10 58 50 B0 20 B4 0E CD 10 58 50 B0 
+                08 B4 0E CD 10 58 EB A7 50 8B C1 2E 
+                F7 26 C9 00 8B C8 58 83 FA 00 75 19 
+                2C 30 B4 00 8B D1 03 C8 72 0A EB 8B 
+                2E C6 06 C8 00 01 EB 83 8B CA BA 00 
+                00 8B C1 2E F7 36 C9 00 8B C8 50 B0 
+                08 B4 0E CD 10 58 50 B0 20 B4 0E CD 
+                10 58 50 B0 08 B4 0E CD 10 58 E9 5A 
+                FF 2E 80 3E C8 00 00 74 02 F7 D9 5E 
+                58 5A C3 00 0A 00                   
+[  18]    01DB: EB 12 50 56 8A 04 3C 00 74 07 46 B4   DEFINE_PRINT_STRING   ; str in  si
+                0E CD 10 EB F3 5E 58 C3             
+[  19]    01EF: EB 1F 2E 89 36 FE 00 5E 50 2E 8A 04   DEFINE_PTHIS          ; current cursor
+                46 3C 00 74 06 B4 0E CD 10 EB F2 58 
+                56 2E 8B 36 FE 00 C3 00 00          
+[  20]    0210: EB 4D 50 51 57 52 B9 00 00 83 FA 01   DEFINE_GET_STRING     ; buffer at ds:di  buffer size in dx
+                76 3C 4A B4 00 CD 16 3C 0D 74 30 3C 
+                08 75 1E E3 F2 49 4F 50 B0 08 B4 0E 
+                CD 10 58 50 B0 20 B4 0E CD 10 58 50 
+                B0 08 B4 0E CD 10 58 EB D6 3B CA 73 
+                D2 88 05 47 41 B4 0E CD 10 EB C8 C6 
+                05 00 5A 5F 59 58 C3                
+[  21]    025F: EB 32 50 1E 53 51 57 B8 40 00 8E D8   DEFINE_CLEAR_SCREEN   ; scroll and set cursor
+                B4 06 B0 00 B7 07 B5 00 B1 00 BF 84 
+                00 8A 35 BF 4A 00 8A 15 FE CA CD 10 
+                B7 00 B2 00 B6 00 B4 02 CD 10 5F 59 
+                5B 1F 58 C3                         
+[  22]    0293: EB 26 52 50 3D 00 00 75 0A 50 B0 30   DEFINE_PRINT_NUM      ; print num in ax
+                B4 0E CD 10 58 EB 12 3D 00 00 79 0A 
+                F7 D8 50 B0 2D B4 0E CD 10 58 E8 05 
+                00 58 5A C3                         
+[  23]    02BB: EB 50 50 53 51 52 B9 01 00 BB 10 27   DEFINE_PRINT_NUM_UNS  ; unsigned
+                3D 00 00 74 32 83 FB 00 74 35 83 F9 
+                00 74 04 3B C3 72 14 B9 00 00 BA 00 
+                00 F7 F3 04 30 50 8A C0 B4 0E CD 10 
+                58 8B C2 50 BA 00 00 8B C3 2E F7 36 
+                FB 01 8B D8 58 EB CE 50 B0 30 B4 0E 
+                CD 10 58 5A 59 5B 58 C3 0A 00       
+[  24]        :                                       ; putc, print, printn
+[  25]    030D: B8 34 12                              mov ax, 1234h
+[  26]    0310: A3 00 00                              mov x,ax
+[  27]        :                                       
+[  28]        :                                       
+[  29]    0313:                                       quit:
+[  30]    0313: B8 00 4C CD 21                        .exit
+[  31]        :                                       end
+[  32]        :                                       
+[  33]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 18      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 03      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 01      -   SP - stack pointer (h.byte)
+0012: 2D      -   check sum (l.byte)
+0013: CA      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 11      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 11      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

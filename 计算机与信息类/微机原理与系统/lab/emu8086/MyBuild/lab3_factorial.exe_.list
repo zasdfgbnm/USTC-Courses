@@ -1,0 +1,240 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+lab3_factorial.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 2018/11/23  --  20:11:32 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;name:
+[   2]        :                                       ;author: mbinary
+[   3]        :                                       ;time: 2018-11
+[   4]        :                                       ;function: factorial
+[   5]        :                                       
+[   6]        :                                       
+[   7]        :                                       include 'emu8086.inc'
+[   8]        :                                       ;include 'mymacro.inc'
+[   9]        :                                       ;include 'factorial.inc'
+[  10]        :                                       
+[  11]    0000: EB 50 50 53 51 52 B9 01 00 BB 10 27   define_print_num_uns
+                3D 00 00 74 32 83 FB 00 74 35 83 F9 
+                00 74 04 3B C3 72 14 B9 00 00 BA 00 
+                00 F7 F3 04 30 50 8A C0 B4 0E CD 10 
+                58 8B C2 50 BA 00 00 8B C3 2E F7 36 
+                50 00 8B D8 58 EB CE 50 B0 30 B4 0E 
+                CD 10 58 5A 59 5B 58 C3 0A 00       
+[  12]    0052: EB 26 52 50 3D 00 00 75 0A 50 B0 30   define_print_num
+                B4 0E CD 10 58 EB 12 3D 00 00 79 0A 
+                F7 D8 50 B0 2D B4 0E CD 10 58 E8 8B 
+                FF 58 5A C3                         
+[  13]        :                                       
+[  14]        :                                       .model small
+[  15]        :                                       .stack 200h
+[  16]        :                                       .data  400h
+[  17]    0280: 00 00 00 00 00 00 00 00 00 00 00 00   tmp dw 10 dup(0)
+                00 00 00 00 00 00 00 00             
+[  18]    0294: 00 00 00 00 00 00 00 00 00 00         buffer db 10 dup(0)
+[  19]    029E: 0A 00                                 size dw 10
+[  20]        :                                       .code
+[  21]    02A0: BA 28 00 8E DA                        .startup
+[  22]    02A5: B1 13                                 mov cl,19
+[  23]    02A7: E8 93 00                              call factorial
+[  24]    02AA: E8 BF 00                              call printArr
+[  25]    02AD: E9 DC 00                              jmp quit
+[  26]        :                                       
+[  27]    02B0:                                       print8 proc
+[  28]        :                                       ; print a 8 bits num store in al
+[  29]    02B0: 53                                    push bx
+[  30]    02B1: B4 00                                 mov ah,0
+[  31]    02B3: BB 10 00                              mov bx,10h
+[  32]    02B6: F6 F3                                 div bl
+[  33]    02B8: 8A DC                                 mov bl,ah
+[  34]    02BA: E8 07 00                              call print4
+[  35]    02BD: 8A C3                                 mov al,bl
+[  36]    02BF: E8 02 00                              call print4
+[  37]    02C2: 5B                                    pop bx
+[  38]    02C3: C3                                    ret
+[  39]        :                                       print8 endp
+[  40]        :                                       
+[  41]    02C4:                                       print4 proc
+[  42]        :                                       ; print a 4bits num store in al
+[  43]    02C4: 3C 09                                 cmp al,9
+[  44]    02C6: 7F 04                                 jg hex
+[  45]    02C8: 04 30                                 add al,'0'
+[  46]    02CA: EB 02                                 jmp prt
+[  47]    02CC:                                       hex:
+[  48]    02CC: 04 37                                 add al ,55
+[  49]    02CE:                                       prt:
+[  50]    02CE: B4 0E                                 mov ah,0eh
+[  51]    02D0: CD 10                                 int 10h
+[  52]    02D2: C3                                    ret
+[  53]        :                                       print4 endp
+[  54]        :                                       
+[  55]    02D3:                                       mulBig proc
+[  56]        :                                       ; num: db
+[  57]        :                                       ; buffer: db arr
+[  58]        :                                       ; size : dw   length of buffer
+[  59]    02D3: 57                                    push di
+[  60]    02D4: 56                                    push si
+[  61]    02D5: 50                                    push ax
+[  62]    02D6: 53                                    push bx
+[  63]    02D7: 51                                    push cx
+[  64]    02D8: 52                                    push dx
+[  65]        :                                       
+[  66]    02D9: 32 FF                                 xor bh,bh
+[  67]    02DB: 8A D9                                 mov bl,cl
+[  68]    02DD: 8B 0E 1E 00                           mov cx,size
+[  69]    02E1: BE 14 00                              lea si,buffer
+[  70]    02E4: BF 00 00                              lea di,tmp
+[  71]    02E7: 03 F1                                 add si,cx
+[  72]        :                                       
+[  73]    02E9:                                       zero:
+[  74]    02E9: 4E                                    dec si
+[  75]    02EA: 80 3C 00                              cmp [si],0
+[  76]    02ED: E1 FA                                 loope zero
+[  77]        :                                       
+[  78]    02EF: 8B CE                                 mov cx,si
+[  79]    02F1: BE 14 00                              lea si,buffer
+[  80]    02F4: 2B CE                                 sub cx,si
+[  81]    02F6: 41                                    inc cx
+[  82]    02F7: 51                                    push cx
+[  83]    02F8: BA 00 00                              mov dx,0
+[  84]        :                                       
+[  85]    02FB:                                       multiply:
+[  86]    02FB: 32 E4                                 xor ah,ah
+[  87]    02FD: 8A 04                                 mov al,[si]
+[  88]    02FF: F6 E3                                 mul bl
+[  89]    0301: 02 D0                                 add dl,al
+[  90]    0303: 89 15                                 mov [di],dx
+[  91]    0305: 32 F6                                 xor dh,dh
+[  92]    0307: 8A D4                                 mov dl,ah
+[  93]    0309: 46                                    inc si
+[  94]    030A: 83 C7 02                              add di,2
+[  95]    030D: E2 EC                                 loop multiply
+[  96]        :                                       
+[  97]    030F: 89 15                                 mov [di],dx
+[  98]    0311: C6 45 02 00                           mov [di+2],00h
+[  99]        :                                       
+[ 100]    0315: 59                                    pop cx
+[ 101]    0316: BE 00 00                              lea si,tmp
+[ 102]    0319: BF 14 00                              lea di,buffer
+[ 103]    031C: BB 00 01                              mov bx,100h
+[ 104]    031F:                                       adjust:
+[ 105]    031F: BA 00 00                              mov dx,0
+[ 106]    0322: 8B 04                                 mov ax,[si]
+[ 107]    0324: F7 F3                                 div bx
+[ 108]    0326: 03 44 02                              add ax,[si+2]
+[ 109]    0329: 89 44 02                              mov [si+2],ax
+[ 110]    032C: 89 15                                 mov [di],dx
+[ 111]    032E: 47                                    inc di
+[ 112]    032F: 83 C6 02                              add si,2
+[ 113]    0332: E2 EB                                 loop adjust
+[ 114]        :                                       
+[ 115]    0334: 88 05                                 mov [di],al
+[ 116]        :                                       
+[ 117]    0336: 5A                                    pop dx
+[ 118]    0337: 59                                    pop cx
+[ 119]    0338: 5B                                    pop bx
+[ 120]    0339: 58                                    pop ax
+[ 121]    033A: 5E                                    pop si
+[ 122]    033B: 5F                                    pop di
+[ 123]    033C: C3                                    ret
+[ 124]        :                                       mulBig endp
+[ 125]        :                                       
+[ 126]    033D:                                       factorial proc
+[ 127]        :                                       ; n:db
+[ 128]        :                                       ; buffer db arr
+[ 129]    033D: 51                                    push cx
+[ 130]    033E: 56                                    push si
+[ 131]    033F: B5 00                                 mov ch,0
+[ 132]    0341: BE 14 00                              lea si,buffer
+[ 133]    0344: C6 04 01                              mov [si],1
+[ 134]    0347:                                       fac:
+[ 135]    0347: E8 89 FF                              call mulBig
+[ 136]    034A: E8 1F 00                              call printArr
+[ 137]    034D: 50 56 EB 03 0D 0A 00 BE B1 00 2E 8A   printn ''
+                04 3C 00 74 07 46 B4 0E CD 10 EB F2 
+                5E 58                               
+[ 138]    0367: E2 DE                                 loop fac
+[ 139]        :                                       
+[ 140]    0369: 5E                                    pop si
+[ 141]    036A: 59                                    pop cx
+[ 142]    036B: C3                                    ret
+[ 143]        :                                       factorial endp
+[ 144]        :                                       
+[ 145]    036C:                                       printArr proc
+[ 146]        :                                       ; buffer db arr
+[ 147]        :                                       ; n dw
+[ 148]    036C: 56                                    push si
+[ 149]    036D: 51                                    push cx
+[ 150]    036E: 50                                    push ax
+[ 151]    036F: BE 14 00                              lea si,buffer
+[ 152]    0372: 8B 0E 1E 00                           mov cx,size
+[ 153]    0376: 03 F1                                 add si,cx
+[ 154]        :                                       
+[ 155]    0378:                                       oneloop:
+[ 156]    0378: 4E                                    dec si
+[ 157]    0379: 8A 04                                 mov al,[si]
+[ 158]    037B: E8 32 FF                              call print8
+[ 159]    037E: 50 B0 20 B4 0E CD 10 58               putc ' '
+[ 160]    0386: E2 F0                                 loop oneloop
+[ 161]        :                                       
+[ 162]    0388: 58                                    pop ax
+[ 163]    0389: 59                                    pop cx
+[ 164]    038A: 5E                                    pop si
+[ 165]        :                                       
+[ 166]    038B: C3                                    ret
+[ 167]        :                                       printArr endp
+[ 168]        :                                       
+[ 169]    038C:                                       quit:
+[ 170]    038C: B8 00 4C CD 21                        .exit
+[ 171]        :                                       end
+[ 172]        :                                       
+[ 173]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 91      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 03      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 08      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 00      -   SP - stack pointer (l.byte)
+0011: 02      -   SP - stack pointer (h.byte)
+0012: 34      -   check sum (l.byte)
+0013: 8F      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 2A      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 2A      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

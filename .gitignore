@@ -12,3 +12,4 @@ do.sh
 *.log
 *.aux
 *.pyc
+a.out

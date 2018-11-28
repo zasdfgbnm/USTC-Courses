@@ -1,6 +1,6 @@
 
 # 中国科学技术大学课程资源
->这是一个收集 中国科学技术大学课程资源的（主要是计算机学院的,也有其他课程,公选课,自由选修等）的 repo, 包括课程电子版书籍，参考书，slides(ppt), 考试试卷，学习心得，某些书的答案。
+>这是一个收集 中国科学技术大学课程资源的（主要是计算机学院的,也有其他课程,公选课,自由选修等）的 repo, 包括课程电子版 书籍，参考书，slides(ppt), 考试试卷，学习心得，某些书的答案。
 
 
 # 目录
@@ -23,13 +23,13 @@
 <!-- vim-markdown-toc -->
 
 # 公告
-* 对这个项目感兴趣的同学可以帮忙宣传,欢迎 star,fork. 欢迎反馈与建议（通过 [issue](https://github.com/mbinary/USTC-CS-Courses-Resource/issues/new),<a href="mailto:zhuheqin@mail.ustc.edu.cn?subject=%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%BB%BA%E8%AE%AE">mail</a>, 或者 [qq](http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes))
-* 如果其他学院的同学感兴趣，可以在 [ustc-courses](https://github.com/USTC-Courses/) 这个 org 中新建（先联系我加入 org) 其他学院资料的 repo, 管理与维护
-* 提示, 可以通过在此页面搜索课程名快速定位,下面的目录是经过拼音排序过的,方便查找. 当然, 还有很多课程还没有, 欢迎大家的参与与贡献.
+* 欢迎 star,fork. 欢迎反馈与建议（通过 [issue](https://github.com/mbinary/USTC-CS-Courses-Resource/issues/new),<a href="mailto:zhuheqin@mail.ustc.edu.cn?subject=%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%BB%BA%E8%AE%AE">mail</a>, 或者 [qq](http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes))
+* 可以通过在此页面搜索课程名快速定位,下面的课程目录是经过**拼音排序**过的,方便查找
+* 可以添加其他计算机非课程资源, 欢迎大家的参与与贡献 (。・∀・)ノ
 
 # [资料下载](https://mbinary.coding.me/ustc-cs/)
 
-大家可以在 github 浏览下面的目录下载, 也可以通过浏览[这里的网页](https://mbinary.coding.me/ustc-cs/)下载资料. 后者可以解决 github 的如下不好体验
+大家可以在 github 浏览下面的目录下载, 也可以通过浏览[这里的网页](https://mbinary.coding.me/ustc-cs/)下载资料. 后者可 以解决 github 的如下不好体验
 
 * 慢
 * 如果想下载二进制文件, 在github 需要点击两次(第一次显示`This file is binary and cannot be displayed inline`,需要再点`open binary file`/`Download`才行), 而在文件浏览版只需要一次即可下载
@@ -41,13 +41,13 @@
 
 # 课程结构
 每门课程大致结构如下，有些栏目可能没有，也可以自己添加认为合理的栏目
-* slides: 主要是 ppt 文件类型（若有多个老师，则在课程目录建立slides-teacherName1, slides-_teacherName2...）
+* slides: 主要是 ppt 文件类型（若有多个老师，则在课程目录建立slides-teacherName1, slides-teacherName2...）
 * homework & lab（一个或两个目录）
 * 教材与参考书可以直接放在课程目录下
 * 课程主页及其他链接资源（记在 课程/README.md 中)
 * 心得与经验
 * students（同学们上传的自己的一些资料,作品，每个同学新建一个目录)
-* 非zip, 非以'.'开头的文件多于 3 个的目录下都有个 zip 文件：`-DIRECTORY 目录下的\d+个文件.zip`,包含当前目录下的一些文件, 这样方便大家一键下载. (上传者可以不用管这个, 我可以用脚本生成)
+* 非zip, 非以'.'开头的文件多于 3 个的目录下都有个 zip 文件：`-DIRECTORY 目录下的\d+个文件.zip`,包含当前目录下的一些文件, 这样方便大家一键下载. (在 git commit前, 运行 `./before__commit.sh`可以自动生成)
 
 如`数据结构`课程
 
@@ -90,9 +90,9 @@
         * [操作系统原理与设计](./计算机与信息类/操作系统原理与设计)
         * [操作系统原理与设计(H)](./计算机与信息类/操作系统原理与设计(H))
         * [程序设计语言基础(英)](./计算机与信息类/程序设计语言基础(英))
-        * [程序语言](./计算机与信息类/程序语言)
         * [common_lisp](./计算机与信息类/common_lisp)
         * [haskell](./计算机与信息类/haskell)
+        * [java&kotlin&scala](./计算机与信息类/java&kotlin&scala)
         * [计算机体系结构](./计算机与信息类/计算机体系结构)
         * [计算机网络](./计算机与信息类/计算机网络)
         * [计算机系统概论(ICS)](./计算机与信息类/计算机系统概论(ICS))

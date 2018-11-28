@@ -1,0 +1,33 @@
+;name:
+;author: mbinary
+;time: 2018-11
+;function:
+include 'emu8086.inc'
+include 'mymacro.inc'
+
+.model small
+.stack 100h
+.data
+
+
+x dw 0
+.code
+.startup
+
+DEFINE_SCAN_NUM       ; store in cx
+DEFINE_PRINT_STRING   ; str in  si
+DEFINE_PTHIS          ; current cursor
+DEFINE_GET_STRING     ; buffer at ds:di  buffer size in dx
+DEFINE_CLEAR_SCREEN   ; scroll and set cursor
+DEFINE_PRINT_NUM      ; print num in ax
+DEFINE_PRINT_NUM_UNS  ; unsigned
+; putc, print, printn
+mov ax, 1234h
+mov x,ax
+
+
+quit:
+.exit
+end
+
+
