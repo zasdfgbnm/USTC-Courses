@@ -66,21 +66,24 @@ def handleDir(target = WALKDIR):
         path = path[n:].strip(os.path.sep)
         if path.startswith('.') :continue
         tar = os.path.join(TARDIR ,path)
-        if not os.path.exists(tar):os.mkdir(tar)
         if 'index.html' in files:
-            shutil.copytree(path,tar)
+            try:shutil.copytree(path,tar)
+            except Exception as e:
+                print(e)
         else: genIndex(path,dirs,files)
 
 def genIndex(path,dirs,files):
     md = ''
     if 'README.md' in files:
-        with open(os.path.join(path,'README.md'),'r') as f :
+        with open(os.path.join(path,'README.md'),'r',errors='ignore') as f :
             #<hr>\n<span style="color:orange;text-align:center;">Read  Me</span>\n<hr>\n
             md = '\n<h1 style="color:red;text-align:center;" >Read Me</h1>\n'+f.read()
     cur = getPath(path)
     dirLst = genDirectoryList(path,dirs)
     fileLst = genFileList(path,files)
     cont = HTML.format(cur=cur,dirLst = dirLst,fileLst = fileLst,readme=md2html(md))
+    tar = os.path.join(TARDIR ,path)
+    if not os.path.exists(tar):os.mkdir(tar)
     filename = os.path.join(tar, 'index.html')
     with open(filename,'w') as f:
         f.write(cont)
