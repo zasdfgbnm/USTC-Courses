@@ -22,24 +22,21 @@ Run `python parse.py` and enter a REPL state, you can type and run sentences and
 # Examples
 Note that when in REPL, every sentence or expresion or block ends with '.'. But in program codes, only the whole program ends with a dot.
 ##  interactive-expression
-
-run command `python parser.py` to enter repl.
-
 Therer are some expressions and sentence in file expr.txt, now test it.
 `python parser.py -f test/expr.txt`
 
 ```c
->> File: "test/expr.txt"
-1
-2     // expression
-3     var a=3,b=2,c;.
+>> codes:
+1     // expression
+2     var a=3,b=2,c;.
+
 >>  c:=a+1.
 >> begin c; c+1!=1 ; c+1=5 end.
 result: 4.0; True; True;
->> for(;b>=0;b:=b-1) print('random num below 100:',random(100)) .
-random num below 100: 73
-random num below 100: 16
-random num below 100: 51
+>> for(;b>=0;b:=b-1) print('random(100): %d',random(100)) .
+random(100): 14
+random(100): 60
+random(100): 58
 >> begin ++1--1; 1<<2+3%2; 2&1 end.
 result: 2.0; 8; 0;
 >>   -1+2*3/%2.
@@ -48,47 +45,61 @@ result: 2.0;
 line 1: ( 1 + 2 .
                 ^
 [Error]: Expected ")", got "."
->> print('const e:',E,'    fac of fac 4:',4!!).
-const e: 2.718281828459045     fac of fac 4: 620448401733239439360000
-```
+>> 4!!.
+result: 620448401733239439360000;
+>> codes:
+1     if   0 then 1
+2     elif 1>2 then 2
+3     elif false then 3
+4     else 4.
 
+result: 4.0;
+```
 ## fibonacci
-run
-`python parser.py  -f test/fibonacci.txt`
+Run `python parser.py  -f test/fibonacci.txt`
 
 ```c
->> File: "test/fibnaci.txt"
+>> codes:
 1     func fib(n)
 2     begin
 3         if n=1 || n=2 then return 1;
 4         return fib(n-1)+fib(n-2);
 5     end ;
-6
-7     var n;
-8     begin
-9         n :=1;
-10        while n<15 do
-11        begin
-12            print('The ',n,'th fib item is:',fib(n));
-13            n :=n+1;
-14        end;
-15
-16    end
-17    .
-The  1.0 th fib item is: 1.0
-The  2.0 th fib item is: 1.0
-The  3.0 th fib item is: 2.0
-The  4.0 th fib item is: 3.0
-The  5.0 th fib item is: 5.0
-The  6.0 th fib item is: 8.0
-The  7.0 th fib item is: 13.0
-The  8.0 th fib item is: 21.0
-The  9.0 th fib item is: 34.0
-The  10.0 th fib item is: 55.0
-The  11.0 th fib item is: 89.0
-The  12.0 th fib item is: 144.0
-The  13.0 th fib item is: 233.0
-The  14.0 th fib item is: 377.0
+6     var n=1;
+7     begin
+8         while n<15 do
+9         begin
+10            print('fib[%d]=%d',n,fib(n));
+11            n :=n+1;
+12        end;
+13    end
+14    .
+
+fib[1]=1
+fib[2]=1
+fib[3]=2
+fib[4]=3
+fib[5]=5
+fib[6]=8
+fib[7]=13
+fib[8]=21
+fib[9]=34
+fib[10]=55
+fib[11]=89
+fib[12]=144
+fib[13]=233
+fib[14]=377
+```
+
+Try the following commands to explore more examples.
+```shell
+python parser.py -f test/factorial.txt
+python parser.py -f test/closure.txt
+python parser.py -f test/closure.txt -i
+python parser.py -f test/closure.txt -t
+python parser.py -f test/closure.txt -s
+python parser.py -f test/closure.txt -istv
+python parser.py  # enter interactive repl
 ```
 # Description
 ## ident type
@@ -130,7 +141,7 @@ The  14.0 th fib item is: 377.0
 * return
 
 ## builtin function
-* print(a,b,c...)
+* print(formatStr,arg1,...)
 * random(), random(n)
 
 # Grammar
@@ -146,10 +157,12 @@ sentence = [ ident ":=" { ident ":=" } sentenceValue
                 |  "begin" sentence { ";" sentence}  "end"
                 |  "if" sentenceValue "then" sentence {"elif" sentence} ["else" sentence]
                 |  "while" sentenceValue "do" sentence
+                |  "do" sentence "while" sentenceValue 
+                |  "switch" sentenceValue {"case" sentenceValue {"," sentenceValue} ":" [setenceValue]}  (* ["default" ":" sentenceValue]   to do *)
                 |  "break"
                 |  "continue"
                 |  ["return"] sentenceValue
-                |  "print" "(" real_arg_list ")" ]
+                |  "print" "(" str,real_arg_list ")" ]
 
 sentenceValue =   condition
 
@@ -170,7 +183,7 @@ level1  = level2 { ( "+" | "-" ) level2 }
 level2 = level3 { "*" | "/" | "/%" | "%" ) level3 }
 level3 = level4 {"^" level4}
 level4 = item {"!"}          (*  factorial *)
-item =  number  |ident { "(" real_arg_list ")" }| "(" sentenceValue" )" | ("+" | "-" | "~" ) item
+item =  number|"true"|"false" | ident { "(" real_arg_list ")" }| "(" sentenceValue" )" | ("+" | "-" | "~" ) item
 ```
 ## syntax 
 Writet down syntax, then convert left recursion to right recursion.
@@ -215,8 +228,8 @@ Though we can't write a production with infinite loops, we can write it in code 
 ```python
 match_level4():
     result = match(item)
-    while if lookAhead  matches item:
-        match(!)
+    while lookAhead  matches item:
+        match("!")
         result = factorial(item)
     return result
 ```
@@ -227,7 +240,7 @@ To simplify this problem, we will emulate this virtual machine and execute instr
 ## register
 This machine has three registers:
 * `b` is the base register that contains the base pointer to locate a varible in the data stack
-* `reg` is the return register that contains the  return value of latest function call 
+* `regs` are a series of registers. Currently the first one is used for returning value of latest function call, and the second one is used to store the `switch` value
 * `pc` is the pc register that points to the instruction 
 ## stack
 There are two stack in this virtual machine. 
@@ -239,8 +252,6 @@ And the other places in one level contains local varibles and real time data for
 ![](src/data_stack.jpg)
 
 Each time we call a function, the level increases 1. Also, the level decreases 1 when we return from a function.
-
-
 ## instruction
 Every instruction consists of three parts. The first is the name of the instruction. Generally, the second is the level diifference of a identifier(if it has). And the third part is the address.
 
@@ -256,9 +267,9 @@ CAL|levelDiff|addr|call a function
 JMP |-|addr|jmp to addr, namely set addr to pc
 JPC|-|addr| pop stack, if the value is not True, jmp addr
 MOV|n1|n2|  stk[top-n2] = stk[top-n1]
-OPR |-| RET| return to the upper level, use current level's first three value to change pc, data stack, base register.
-OPR | -|POP| pop the data stack, store the value in `reg` register
-OPR|-|PUSH| push `reg` to stack top
+RET|-|-| return to the upper level, use current level's first three value to change pc, data stack, base register.
+POP|-|-| pop the data stack, store the value in `reg` register
+PUSH|-|-| push `reg` to stack top
 OPR|-|operator type| variout operation on value
 
 # Design
@@ -269,6 +280,16 @@ Some keypoints is the control structures' instruction traslation.
 ## while/break
 ![](src/while_ins_stack.jpg)
 `continue`, `for`  can be translated in the same way.
+## switch 
+eg 
+```c
+switch n
+    case 1,2:print('1 or 2')
+    case 1+5:print('6')
+    case func_add(1,6):print('7')
+;
+```
+
 ## function arguments pass
 When analysing the function's defination, we can store the formal arguments as function's local varibles.
 As soon as we call this function, we should calculate the real arguments in the level upper the function, and then pass value to the function's formal varibles one by one.
@@ -302,9 +323,10 @@ I use a extra register `reg` to achive this. Before we return,
 * `OPR,0,'PUSH'` will push reg value to stack top
 
 Now the return value has be passed from level n+1 to level n
+![](src/return_value.jpg)
 
-## instruction fillback
-Taking `while` block as an example, Note that we don't know the `JPC` instruction's target addr until we finish analysing the whole block.The Solution is that after we analyse while condition, we generate an instruction with no target address, just take a place. We note down this instruction's address. As soon as we finish analysing the whole  `while` block, the instruction pointer, namely `ip`, pointing to the target address of `JPC`. Then we fill back the `JPC` instruction with the target address along to ip.
+## instruction backpatching
+Taking `while` block as an example, Note that we don't know the `JPC` instruction's target addr until we finish analysing the whole block.The Solution is that after we analyse while condition, we generate an instruction with no target address, just take a place. We note down this instruction's address. As soon as we finish analysing the whole  `while` block, the instruction pointer, namely `ip`, pointing to the target address of `JPC`. Then we backpatch the `JPC` instruction with the target address along to ip.
 
 ## symbol table
 When analysing and translating, we want to get the symbol which including level, address,(value for constant) according to its name. The following shows how to achive it elegantly
@@ -330,9 +352,34 @@ curClosure = function.closure
 call function
 curClosure = saved
 ```
+## builtin function--print
+This function is just like function `printf` in clang.
+Call it in the following format:
+`print(FORMAT[,arg1,arg2...])`
+The format string supports two kinds of format currently:
+* `%d`: integer
+* `%f`: float
+
+If you want to print raw `%d`, not formatting. You can add a back slash `  ` in front of `%`. (So it's with `%f`...)
+
+For example:
+```python
+>> print('a=%d, % \%d',1)
+a=1, % %d
+```
+
+To implement this builtin function, we should firstly parse the formatting str. I parse the format-str and generate segs seperated by %d or %f.
+For instance, `'fib[%d]=%d'` generates segs `['fib[','%d',']=','%d']`. 
+For every seg, if it's string, generate instruction `('LIT',0,c)`, c is one chracter that consist of seg.
+If it's `%d` or `%f`, we should first match comma, and then parse the followwing value and generate instructions. When in runtime, after executing there instructions, we will get a value(only take place one data-stack unit).
+
+After handling all segs, we generate an instruction `('INT',2,n)`, which represents printing the top n units of data stack, and stk.top = stk.top-n.
+N can be calculated by suming all lengths of str-seg, and num of format-seg.
+
+
 # To do
 - [ ] array
 - [ ] different value pass
-- [ ] do while, switch
 - [ ] function pass
 - [ ] type 
+- [ ] struct

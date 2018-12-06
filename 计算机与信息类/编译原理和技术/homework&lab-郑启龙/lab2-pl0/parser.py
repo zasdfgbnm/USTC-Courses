@@ -36,6 +36,7 @@ SHOWVAR = args.varible
 SHOWTOKEN = args.token
 
 
+WHILE = Token('NAME','while')
 THEN = Token('NAME','then')
 ELSE = Token('NAME','else')
 DO = Token('NAME','do')
@@ -97,8 +98,8 @@ class instruction:
     def __str__(self):
         s = self.addr
         if type(self.addr)==str:
-            s = '"'+self.addr+'"'
-        return '({}, {}, {})'.format(self.name.ljust(4),self.levelDiff,s)
+            s =repr(self.addr)
+        return '{}   {}   {}'.format(self.name.ljust(4),self.levelDiff,s)
 class closure:
     '''environment for every function, including a dict of symbols and pointing to outer environment'''
     def __init__(self,items=None,outer=None):
@@ -154,6 +155,13 @@ class parser(object):
         self.ip+=1
         return self.ip-1
     def errorInfo(self):
+        '''when parsing codes and encountering error, 
+            print whole line in which this error is
+            and print error information
+        '''
+        def tkstr(tk):
+            if tk.type=='STR':return repr(tk.value)
+            return str(tk.value)
         tk = self.tokens[self.pointer]
         a=b = self.pointer
         lineno = tk.lineNum
@@ -162,10 +170,10 @@ class parser(object):
             a -=1
         while b<n and self.tokens[b].lineNum == lineno:
             b +=1
-        s1 = ' '.join([str(t.value) for t in self.tokens[a+1:self.pointer]])
-        s2 = ' '.join([str(t.value) for t in self.tokens[self.pointer:b]])
+        s1 = ' '.join([tkstr(t) for t in self.tokens[a+1:self.pointer]])
+        s2 = ' '.join([tkstr(t) for t in self.tokens[self.pointer:b]])
         print('line {}: {} {}'.format(lineno,s1,s2))
-        print(' '*(len(s1)+8+len(str(lineno)))+'^'*len(str(tk.value)))
+        print(' '*(len(s1)+8+len(str(lineno)))+'^'*len(tk.value))
         return tk
     def errorIns(self,ins,pc):
         print('[Error]: Unknown instruction {}: {}  '.format(pc,ins))
@@ -196,7 +204,7 @@ class parser(object):
         try:
             self.program()
             if SHOWINS:
-                print('Instructions:')
+                print('     ins   i   a')
                 for i,ins in enumerate(self.codes):print(str(i).ljust(4),ins)
             if self.pointer != len(self.tokens):
                 raise Exception ('[Error]: invalid syntax')
@@ -226,7 +234,7 @@ class parser(object):
         return any([self.isType(i) for i in lst])
     def wantType(self,s):
         if not self.isType(s): self.errorExpect(s)
-    def fillBack(self,ip,addr,levelDiff=None):
+    def backpatching(self,ip,addr,levelDiff=None):
         self.codes[ip].addr= addr
         if levelDiff is not None:self.codes[ip].levelDiff=levelDiff
     def program(self):
@@ -240,7 +248,7 @@ class PL0(parser):
     def __init__(self,tokens=None,syms=None,codes=None,level=0):
         '''init pc, closure, reserved keywords, operators'''
         super().__init__()
-        self.reserved={'FUNC','PRINT','RETURN','BEGIN','END','IF','THEN','FOR','ELIF','ELSE','WHILE','DO','BREAK','CONTINUE','VAR','CONST','ODD','RANDOM'}
+        self.reserved={'FUNC','PRINT','RETURN','BEGIN','END','IF','THEN','FOR','ELIF','ELSE','WHILE','DO','BREAK','CONTINUE','VAR','CONST','ODD','RANDOM','SWITCH','CASE','DEFAULT'}
         self.bodyFirst= self.reserved.copy()
         self.bodyFirst.remove('ODD')
         self.relationOPR= {'EQ':eq,'NEQ':ne,'GT':gt,'LT':lt,'GE':ge,'LE':le} # odd
@@ -254,17 +262,17 @@ class PL0(parser):
         self.binaryOPR.update(self.arithmeticOPR)
         self.binaryOPR.update(self.bitOPR)
         del self.binaryOPR['BITNOT']
-        self.unaryOPR = {'NEG':neg,'NOT':not_,'BITNOT':lambda x:~round(x),'FAC':lambda x:reduce(mul,range(1,round(x)+1),1),'ODD':lambda x:round(x)%2==1, 'RND':lambda x:randint(0,x)}#abs
+        self.unaryOPR = {'NEG':neg,'NOT':not_,'BITNOT':lambda x:~round(x),'FAC':lambda x:reduce(mul,range(1,round(x)+1),1),'ODD':lambda x:round(x)%2==1, 'RND':lambda x:randint(0,x),'INT':round}#abs
 
     def program(self):
         self.enableJit = False
         self.genIns('INT',0,None)
         self.genIns('JMP',0,None)
         ip= self.body()
-        self.fillBack(0,self.curClosure.varNum+3)
-        self.fillBack(1,ip)
+        self.backpatching(0,self.curClosure.varNum+3)
+        self.backpatching(1,ip)
         self.match(PERIOD)
-        self.genIns('OPR',0,'RET')
+        self.genIns('RET',0,0)
     def body(self):
         while 1:
             if self.isType('CONST') or self.isType('VAR'):
@@ -275,8 +283,13 @@ class PL0(parser):
                     val = None
                     if self.isType('EQ'):
                         self.match(EQ)
+                        minus = False
+                        if self.isType('SUB'):
+                            self.match()
+                            minus=True
                         self.wantType('NUM')
                         val = float(self.match().value)
+                        if minus: val = -val
                     self.addSymbol(name,tp,val)
                     if self.isType('SEMICOLON'):
                         self.match()
@@ -304,11 +317,11 @@ class PL0(parser):
                 span1 = nvar -narg
                 span2 = 3+nvar
                 for i ,ip in enumerate(ips):
-                    self.fillBack(ip,span1+i,span2+i)
+                    self.backpatching(ip,span1+i,span2+i)
                 self.match(SEMICOLON)
-                self.fillBack(beginIp,nvar+3)
+                self.backpatching(beginIp,nvar+3)
                 self.level -=1
-                self.genIns('OPR',0,'RET')
+                self.genIns('RET',0,0)
             else:break
         ret = self.ip
         if SHOWVAR:
@@ -321,7 +334,7 @@ class PL0(parser):
                 self.genIns('STO',0,sym.addr)
         if not  self.isType('PERIOD'):
             for ip in self.sentence()['RETURN']:
-                self.fillBack(ip,self.ip)
+                self.backpatching(ip,self.ip)
         return ret
     def arg_list(self):
         self.match(LEFT)
@@ -355,6 +368,26 @@ class PL0(parser):
             for i in ['BREAK','CONTINUE','RETURN']:
                 ret[i] = ret[i].union(dic[i])
         return ret
+    def formatStr(self,s):
+        n = len(s)
+        i = 0
+        segs = []
+        last = 0
+        while i<n:
+            if s[i]=='%' and i+1<n:
+                if i>0 and s[i-1]=='\\':
+                    segs.append(s[last:i-1])
+                    last=i
+                elif s[i+1] in 'df':
+                    segs.append(s[last:i])
+                    segs.append('%{}'.format(s[i+1]))
+                    last = i+2
+                    i +=1
+            i+=1
+        if last<n:
+            segs.append(s[last:])
+        return segs
+
     def sentence(self,outerLoop=None):
         ret ={'BREAK':set(),'CONTINUE':set(),'RETURN':set()}
         if self.isType('BEGIN'):
@@ -363,8 +396,25 @@ class PL0(parser):
             self.match(END)
         elif self.isType('PRINT'):
             self.match()
-            n = self.real_arg_list()
-            self.genIns('INT',2,n)
+            self.match(LEFT)
+            if not self.isType('RIGHT'):
+                self.wantType('STR')
+                s  = self.match().value
+            else:s=''
+            segs= self.formatStr(s)
+            n = 0
+            for seg in segs:
+                if seg in ['%d','%f']:
+                    self.match(COMMA)
+                    self.sentenceValue()
+                    if seg=='%d': self.genIns('OPR',1,'INT')#type convert
+                    n +=1
+                else:
+                    for i in seg: self.genIns('LIT',0,i)
+            self.genIns('LIT',0,'\n')
+            unitNum = sum(len(i) for i in segs) -n +1
+            self.genIns('INT',2,unitNum)
+            self.match(RIGHT)
         elif self.isType('BREAK'):
             if outerLoop is None: self.errorLoop('break')
             self.match()
@@ -384,7 +434,7 @@ class PL0(parser):
                 self.match()
                 ip = self.genIns('JMP',0,None)
                 jmpIps.append(ip)
-                self.fillBack(jpcIp,self.ip)
+                self.backpatching(jpcIp,self.ip)
                 self.sentenceValue()
                 jpcIp = self.genIns('JPC',0,None)
                 self.match(THEN)
@@ -396,14 +446,52 @@ class PL0(parser):
                 self.match()
                 ip = self.genIns('JMP',0,None)
                 jmpIps.append(ip)
-                self.fillBack(jpcIp,self.ip)
+                self.backpatching(jpcIp,self.ip)
                 dic=self.sentence(outerLoop)
                 for i in ['BREAK','CONTINUE','RETURN']:
                     ret[i] = ret[i].union(dic[i])
             else:
-                self.fillBack(jpcIp,self.ip)
+                self.backpatching(jpcIp,self.ip)
             for ip in jmpIps:
-                self.fillBack(ip,self.ip)
+                self.backpatching(ip,self.ip)
+        elif self.isType('SWITCH'):
+            self.match()
+            self.sentenceValue()
+            self.genIns('POP',0,1)
+            while self.isType('CASE'):
+                self.match()
+                self.genIns('PUSH',0,1)
+                self.sentenceValue()
+                self.genIns('OPR',2,'EQ')
+                if self.isType('COMMA'):
+                    self.match()
+                    self.sentenceValue()
+                    self.genIns('PUSH',0,1)
+                    self.genIns('OPR',2,'EQ')
+                    self.genIns('OPR',2,'OR')
+                jpcIp = self.genIns('JPC',0,None)
+                self.match(COLON)
+                if not self.isType('CASE'):
+                    dic = self.sentence()
+                self.backpatching(jpcIp,self.ip)
+            #if self.isType('DEFAULT'):
+            #    self.match()
+            #    self.match(COLON)
+            #    self.sentence()
+        elif self.isType('DO'):
+            self.match()
+            jpcIp =None
+            beginIp = self.ip
+            ret  = self.sentence(1)
+            self.match(WHILE)
+            self.sentenceValue()
+            jpcIp = self.genIns('JPC',0,None)
+            self.genIns('JMP',0,beginIp)
+            self.backpatching(jpcIp,self.ip)
+            for jmpip in ret['BREAK']:
+                self.backpatching(jmpip,self.ip)
+            for jmpip in ret['CONTINUE']:
+                self.backpatching(jmpip,beginIp)
         elif self.isType('WHILE') or self.isType('FOR'):
             tp = self.match()
             beginIp = jpcIp =None
@@ -427,15 +515,15 @@ class PL0(parser):
                 self.match(RIGHT)
             ret  = self.sentence(1)
             self.genIns('JMP',0,beginIp)
-            self.fillBack(jpcIp,self.ip)
+            self.backpatching(jpcIp,self.ip)
             for jmpip in ret['BREAK']:
-                self.fillBack(jmpip,self.ip)
+                self.backpatching(jmpip,self.ip)
             for jmpip in ret['CONTINUE']:
-                self.fillBack(jmpip,beginIp)
+                self.backpatching(jmpip,beginIp)
         elif self.isType('RETURN'): # retrun sentence
             self.match()
             self.sentenceValue()
-            self.genIns('OPR',0,'POP')
+            self.genIns('POP',0,0)
             ret['RETURN'].add(self.genIns('JMP',0,None))
         elif self.isAnyType(['SEMICOLON','END','ELSE']):pass # allow blank sentence: namely   ; ;; 
         elif self.isAssignment() : # this must be the last to be checked in sentences
@@ -454,7 +542,7 @@ class PL0(parser):
             self.errorArg(sym.argNum,n2)
         self.genIns('CAL',abs(self.level-sym.level),sym.value)
         self.genIns('INT',1,n2)
-        self.genIns('OPR',0,'PUSH')
+        self.genIns('PUSH',0,0)
     def sentenceValue(self):
         self.condition()
     def isAssignment(self):
@@ -492,9 +580,9 @@ class PL0(parser):
             self.sentenceValue()
             ip2 = self.genIns('JMP',0,None)
             self.match(COLON)
-            self.fillBack(ip,self.ip)
+            self.backpatching(ip,self.ip)
             self.sentenceValue()
-            self.fillBack(ip2,self.ip)
+            self.backpatching(ip2,self.ip)
     def condition_and(self):
         self.condition_not()
         while self.isType('AND'):
@@ -545,9 +633,9 @@ class PL0(parser):
         if self.isType('NUM'):
             val = float(self.match().value)
             self.genIns('LIT',0,val)
-        elif self.isType('STR'):
-            val = self.match().value
-            self.genIns('LIT',0.,val)
+        #elif self.isType('STR'):
+        #    val = self.match().value
+        #    self.genIns('LIT',0.,val)
         elif self.isType('LEFT'):
             self.match()
             self.sentenceValue()
@@ -577,11 +665,16 @@ class PL0(parser):
                 self.funcall()
             else:
                 name = self.match().value
-                sym = self.getSymbol(name)
-                if sym.type=='CONST':
-                    self.genIns('LIT',0,sym.value)
+                if name=='true':
+                    self.genIns('LIT',0,True)
+                elif name=='false':
+                    self.genIns('LIT',0,False)
                 else:
-                    self.genIns('LOD',abs(self.level-sym.level),sym.addr)
+                    sym = self.getSymbol(name)
+                    if sym.type=='CONST':
+                        self.genIns('LIT',0,sym.value)
+                    else:
+                        self.genIns('LOD',abs(self.level-sym.level),sym.addr)
         else:
             self.errorExpect('a value')
     def level1(self):
@@ -637,7 +730,7 @@ class PL0(parser):
         stk = stack([0,0,0])
         stk.top=2
         b = pc=0
-        reg = None
+        regs=[None,None]
         while 1:
             ins = self.codes[pc]
             pc+=1
@@ -647,8 +740,7 @@ class PL0(parser):
                 elif ins.levelDiff==2: #print 
                     stk.top = stk.top-ins.addr+1
                     for i in range(ins.addr):
-                        print(stk[stk.top+i],end=' ')
-                    print()
+                        print(stk[stk.top+i],end='')
                     stk.top-=1
                 else:self.errorIns(ins,pc-1)
             elif ins.name=='LIT':
@@ -679,19 +771,18 @@ class PL0(parser):
                     arg2 = stk.pop()
                     arg1 = stk[stk.top]
                     stk[stk.top] = self.binaryOPR[ins.addr](arg1,arg2)
-                if ins.levelDiff==0:
-                    if ins.addr =='RET':
-                        pc = stk[b+2]
-                        if pc!=0: stk.top=b-1
-                        b = stk[b+1]
-                    elif ins.addr=='POP':
-                        reg = stk.pop()
-                    elif ins.addr=='PUSH':
-                        stk.push(reg)
-                    else:self.errorIns(ins,pc-1)
+                else:self.errorIns(ins,pc-1)
+            elif ins.name=='RET':
+                pc = stk[b+2]
+                if pc!=0: stk.top=b-1
+                b = stk[b+1]
+            elif ins.name=='POP':
+                regs[ins.addr] = stk.pop()
+            elif ins.name=='PUSH':
+                stk.push(regs[ins.addr])
             else:
                 self.errorIns(ins,pc-1)
-            if SHOWSTACK: print(ins,stk[:stk.top+1])
+            if SHOWSTACK: print(str(pc).ljust(5),ins,stk[:stk.top+1])
             if pc==0:break
         return stk[3:stk.top+1]
 
@@ -703,9 +794,10 @@ def getCode(inStream):
         if line=='':
             eof = True
             break
+        if line.rstrip(' \n\r\t')=='': continue
         lines.append(line)
         p = line.find('//')
-        if p==-1 and line.rstrip('\n\t\r ').endswith('.'):break
+        if p==-1 and line.rstrip('\n\r \t').endswith('.'):break
     if eof and len(lines)==0: raise EOFError
     return lines,inStream
 
@@ -726,11 +818,12 @@ def testFromFile(f):
         try:
             while 1:
                 lines,fp = getCode(fp)
-                if len(lines)==1: print('>>',lines[0].strip('\n'))
+                if len(lines)==1: print('>>',lines[0].strip('\n\r'))
                 else:
-                    print('>> File: "{}"'.format(f))
+                    print('>> codes: ')
                     for i,l in enumerate(lines):
                         print(str(i+1).ljust(5),l,end='')
+                    print()
                 tk =[i for i in  gen_token(''.join(lines))]
                 if tk ==[]:continue
                 res = cal.parse(tk)

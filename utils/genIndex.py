@@ -1,7 +1,7 @@
 # coding: utf-8
 import os
 import markdown
-
+import shutil
 from getSize import getSize
 from config import PATH,HTML,WALKDIR,TARDIR
 
@@ -64,21 +64,26 @@ def handleDir(target = WALKDIR):
         dirs = pinyinSort(dirs)
         files = pinyinSort(files)
         path = path[n:].strip(os.path.sep)
-        if path.startswith('.'):continue
-        md = ''
-        if 'README.md' in files:
-            with open(os.path.join(path,'README.md'),'r') as f :
-                #<hr>\n<span style="color:orange;text-align:center;">Read  Me</span>\n<hr>\n
-                md = '\n<h1 style="color:red;text-align:center;" >Read Me</h1>\n'+f.read()
-        cur = getPath(path)
-        dirLst = genDirectoryList(path,dirs)
-        fileLst = genFileList(path,files)
-        cont = HTML.format(cur=cur,dirLst = dirLst,fileLst = fileLst,readme=md2html(md))
+        if path.startswith('.') :continue
         tar = os.path.join(TARDIR ,path)
         if not os.path.exists(tar):os.mkdir(tar)
-        filename = os.path.join(tar, 'index.html')
-        with open(filename,'w') as f:
-            f.write(cont)
+        if 'index.html' in files:
+            shutil.copytree(path,tar)
+        else: genIndex(path,dirs,files)
+
+def genIndex(path,dirs,files):
+    md = ''
+    if 'README.md' in files:
+        with open(os.path.join(path,'README.md'),'r') as f :
+            #<hr>\n<span style="color:orange;text-align:center;">Read  Me</span>\n<hr>\n
+            md = '\n<h1 style="color:red;text-align:center;" >Read Me</h1>\n'+f.read()
+    cur = getPath(path)
+    dirLst = genDirectoryList(path,dirs)
+    fileLst = genFileList(path,files)
+    cont = HTML.format(cur=cur,dirLst = dirLst,fileLst = fileLst,readme=md2html(md))
+    filename = os.path.join(tar, 'index.html')
+    with open(filename,'w') as f:
+        f.write(cont)
 
 def getPath(path):
     lst = path.split(os.path.sep)

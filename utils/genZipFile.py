@@ -18,7 +18,7 @@ def genZipFile(tar = WALKDIR,rewrite=False):
     pwd = os.path.abspath('.')
     for path, dirs, files in gen:
         li = path.strip(os.sep).split(os.sep)
-        if reduce(or_,[i[0]=='.' for i in li],False) :continue # 可以用 any, all
+        if any([i[0]=='.' for i in li]) or 'index.html' in files :continue
         ziplst = []
         for i in files:
             if i.endswith('个文件.zip'):
