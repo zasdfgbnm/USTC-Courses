@@ -135,5 +135,3 @@ if __name__=='__main__':
     else: dg.bfs()
     dt = time()-t
     print('cost time: {:.4f}s'.format(dt))
-    while 1:
-        pass

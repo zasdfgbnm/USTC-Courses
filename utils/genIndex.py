@@ -12,7 +12,6 @@ try:
 except:
     print('No module pypinyin, using defalut method to sort')
 
-
 def pinyinSort(items):
     if hasPinyin:
         dic = {''.join(sum(pinyin(i,style=0),[])).lower():i for i in items}
@@ -24,7 +23,6 @@ def pinyinSort(items):
 def md2html(s):
     exts = ['markdown.extensions.extra', 'markdown.extensions.codehilite','markdown.extensions.tables','markdown.extensions.toc']
     return markdown.markdown(s,extensions=exts)
-
 
 def getFmt():
     dic={}
@@ -54,12 +52,13 @@ def getIcon(name):
     return FMT_DIC[suf] if suf in FMT_DIC else FMT_DIC['other']
 
 
-def handleDir(target = WALKDIR):
-    n = len(target)
-    gen = os.walk(target)
+def handleDir(target):
     if os.path.exists(TARDIR):
         os.system('rm -rf '+TARDIR)
-    os.mkdir(TARDIR)
+    try:os.mkdir(TARDIR)
+    except:return
+    n = len(target)
+    gen = os.walk(target)
     for path,dirs,files in gen:
         dirs = pinyinSort(dirs)
         files = pinyinSort(files)
@@ -69,10 +68,10 @@ def handleDir(target = WALKDIR):
         if 'index.html' in files:
             try:shutil.copytree(path,tar)
             except Exception as e:
-                print(e)
+                print(e,path)
         else: genIndex(path,dirs,files)
 
-def genIndex(path,dirs,files):
+def genIndex(path,dirs,files,htmlTemp = HTML):
     md = ''
     if 'README.md' in files:
         with open(os.path.join(path,'README.md'),'r',errors='ignore') as f :
@@ -81,7 +80,7 @@ def genIndex(path,dirs,files):
     cur = getPath(path)
     dirLst = genDirectoryList(path,dirs)
     fileLst = genFileList(path,files)
-    cont = HTML.format(cur=cur,dirLst = dirLst,fileLst = fileLst,readme=md2html(md))
+    cont = htmlTemp.format(cur=cur,dirLst = dirLst,fileLst = fileLst,readme=md2html(md))
     tar = os.path.join(TARDIR ,path)
     if not os.path.exists(tar):os.mkdir(tar)
     filename = os.path.join(tar, 'index.html')
@@ -114,6 +113,5 @@ def genDirectoryList(path,dirs):
     if lst==[]: lst.append('<li><i class="fa fa-meh-o"></i>&nbsp;None</li>')
     return '\n'.join(lst)
 
-
 if __name__ =='__main__':
-    handleDir()
+    handleDir(WALKDIR)

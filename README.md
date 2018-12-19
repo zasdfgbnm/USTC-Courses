@@ -23,7 +23,7 @@
 <!-- vim-markdown-toc -->
 
 # 公告
-* 欢迎 star,fork. 欢迎反馈与建议（通过 [issue](https://github.com/mbinary/USTC-CS-Courses-Resource/issues/new),<a href="mailto:zhuheqin@mail.ustc.edu.cn?subject=%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%BB%BA%E8%AE%AE">mail</a>, 或者 [qq](http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes))
+* 欢迎 star,fork. 欢迎反馈与建议（通过 [issue](https://github.com/mbinary/USTC-CS-Courses-Resource/issues/new),<a href="mailto:&#122;huheqin1@gmail.com?subject=%E5%8F%8D%E9%A6%88%E4%B8%8E%E5%BB%BA%E8%AE%AE">mail</a>, 或者 [qq](http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes))
 * 可以通过在此页面搜索课程名快速定位,下面的课程目录是经过**拼音排序**过的,方便查找
 * 可以添加其他计算机非课程资源, 欢迎大家的参与与贡献 (。・∀・)ノ
 
@@ -77,10 +77,24 @@
 
 
 # 课程目录
+**根据拼音字母排序**
 
 * [.](.)
     * [docs](./docs)
-        * [src](./docs/src)
+        * [assets](./docs/assets)
+        * [css](./docs/css)
+        * [docs](./docs/docs)
+        * [工具类](./docs/工具类)
+        * [经管类](./docs/经管类)
+        * [计算机与信息类](./docs/计算机与信息类)
+        * [js](./docs/js)
+        * [lib](./docs/lib)
+        * [其他](./docs/其他)
+        * [人文社科类](./docs/人文社科类)
+        * [书籍推荐](./docs/书籍推荐)
+        * [数学类](./docs/数学类)
+        * [utils](./docs/utils)
+        * [物理类](./docs/物理类)
     * [工具类](./工具类)
     * [经管类](./经管类)
         * [会计学原理](./经管类/会计学原理)
@@ -169,7 +183,7 @@ echo "公选课/人工智障"  >> .git/info/sparse-checkout  #这里工作目录
 #只需记住的是 加入的目录应该在远程仓库存在，否则报错“error: Sparse checkout leaves no entry on the working directory”
 
 git pull origin master
-git remote add upstream git@github.com:mbinary/USTC-CS-Courses-Resource.git 
+git remote add upstream git@github.com:mbinary/USTC-CS-Courses-Resource.git
 ```
 建议: 如果没有较大的改动, 或者在改动之前,可以删除掉以前 fork 的仓库 重新 fork
 

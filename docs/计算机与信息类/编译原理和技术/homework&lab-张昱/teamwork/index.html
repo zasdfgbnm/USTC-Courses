@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/yinyang.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/yinyang.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","width":350,"display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;:                 //计算机与信息类/编译原理和技术/homework&amp;lab-张昱/teamwork                                                 Directories">
+<meta property="og:type" content="website">
+<meta property="og:title" content="mbinary&#39;s blog">
+<meta property="og:url" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/index.html">
+<meta property="og:site_name" content="mbinary&#39;s blog">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;:                 //计算机与信息类/编译原理和技术/homework&amp;lab-张昱/teamwork                                                 Directories">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-15T10:07:50.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mbinary&#39;s blog">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;:                 //计算机与信息类/编译原理和技术/homework&amp;lab-张昱/teamwork                                                 Directories">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mbinary's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://mbinary.coding.me/ustc-cs/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | mbinary's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mbinary's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">15</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签云<span class="badge">47</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />时间轴<span class="badge">39</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-leetcode">
+    <a href="/leetcode/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-line-chart"></i> <br />leetcode</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-ustc-cs menu-item-active">
+    <a href="/ustc-cs/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />CS课程资源</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="我来帮你找( •̀ ω •́ )✧" spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline"></h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/ustc-cs/">USTC-CS</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/编译原理和技术/">编译原理和技术</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/编译原理和技术/homework&lab-张昱/">HOMEWORK&LAB-张昱</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>TEAMWORK</li>
+        
+      
+    
+      
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <script src="/assets/js/APlayer.min.js"> </script>
+
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://mbinary0.github.io/resource/github.markdown.css" rel="stylesheet"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </head>
+  <body>
+     	<!-- hexo-inject:begin --><!-- hexo-inject:end --><div><h2>
+                <a href="../index.html">&nbsp;&nbsp;<i class="fa fa-level-up"></i>&nbsp;&nbsp;</a>:
+                /<a href="../../../../index.html"><i class="fa fa-home"></i></a>/<a href="../../../index.html">计算机与信息类</a>/<a href="../../index.html">编译原理和技术</a>/<a href="../index.html">homework&lab-张昱</a>/<a href="index.html">teamwork</a>
+            </h2>
+        </div>
+        
+        
+        <h2>Directories</h2>
+        <ul>
+        <li><a href="gcForC/index.html"><i class="fa fa-folder"></i>&nbsp;gcForC</a></li>
+<li><a href="pics/index.html"><i class="fa fa-folder"></i>&nbsp;pics</a></li>
+        </ul>
+
+        <h2>Files</h2>
+        <ul>
+        <li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/-USTC-Course-计算机与信息类-编译原理和技术-homework&lab-张昱-teamwork目录下的6个文件.zip" target="_blank" rel="noopener"><i class="fa fa-file-zip-o"></i>&nbsp;-USTC-Course-计算机与信息类-编译原理和技术-homework&lab-张昱-teamwork目录下的6个文件.zip---(40.20K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/Algorithm by Fan.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;Algorithm by Fan.md---(7.76K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/Algotirhms.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;Algotirhms.md---(13.26K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/GC-state-of-the-art.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;GC-state-of-the-art.md---(3.61K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/Java Garbage Collector.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;Java Garbage Collector.md---(10.57K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/notes_for_JVM.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;notes_for_JVM.md---(3.05K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/questions" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;questions---(1.29K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/README.md" target="_blank" rel="noopener"><i class="fa fa-pencil-square-o"></i>&nbsp;README.md---(11.21K)</a></li>
+        </ul>
+
+        <div style="text-decration:underline;display:inline">
+        <a href="https://github.com/mbinary/USTC-CS-Courses-Resource.git" target="_blank" rel="external"><i class="fa fa-github"></i>&nbsp; Github</a>
+        <a href="mailto:&#122;huheqin1@gmail?subject=反馈与建议" style="float:right" target="_blank" rel="external"><i class="fa fa-envelope"></i>&nbsp; Feedback</a>
+        </div>
+
+        <h1 style="color:red;text-align:center;">Read Me</h1>
+
+<h1 id="introduction">Introduction</h1>
+<p>This teamwork project is one of the <a href="https://github.com/ustc-compiler/2017fall-student-teamworks" target="_blank" rel="noopener">projects</a> for the class <a href="http://staff.ustc.edu.cn/~yuzhang/compiler/" target="_blank" rel="noopener">USTC-Compilter-H</a>, which is focused on the mechanism of the Java Garbage Collection and researches on kinds of  GC algorithms.</p>
+<h1 id="_1">项目介绍</h1>
+<p>本项目是中国科大<a href="http://staff.ustc.edu.cn/~yuzhang/compiler/" target="_blank" rel="noopener">编译原理(h)</a>课程中<a href="https://github.com/ustc-compiler/2017fall-student-teamworks" target="_blank" rel="noopener">团队项目</a>中的一个,针对的是“Java Garbage Collection 与各种GC算法”。</p>
+<h3 id="1">1. 项目链接</h3>
+<h4 id="_2"><a href="https://github.com/USTC-Compiler-H-Team-10/teamwork.git" target="_blank" rel="noopener">项目主页</a></h4>
+<h4 id="ssh-key">ssh key</h4>
+<p>git@github.com:USTC-Compiler-H-Team-10/teamwork.git</p>
+<h3 id="2">2. 成员信息</h3>
+<table>
+<thead>
+<tr>
+<th>job</th>
+<th>name</th>
+<th>GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>队长</td>
+<td>齐炜祯</td>
+<td><a href="https://github.com/qiweizhen" target="_blank" rel="noopener"> qiweizhen</a></td>
+</tr>
+<tr>
+<td>成员</td>
+<td>黄一凡</td>
+<td><a href="https://github.com/GhostScreaming" target="_blank" rel="noopener">GhostScreaming</a></td>
+</tr>
+<tr>
+<td>成员</td>
+<td>金泽文</td>
+<td><a href="https://github.com/kingzevin" target="_blank" rel="noopener">kingzevin</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3">3. 项目简介</h3>
+<p>本组研究的课题为“Java Garbage Collection 与各种GC算法”。
+WikiPedia 对 Garbage Collection 的定义如下:</p>
+<blockquote>
+<p>In computer science, garbage collection (GC) is a form of automatic memory management. The garbage collector, or just collector, attempts to reclaim garbage, or memory occupied by objects that are no longer in use by the program</p>
+</blockquote>
+<p>几乎现代编程语言都使用了动态内存分配，在内存有限的环境下，回收运行过程中不再需要的对象，重新释放内存就显得尤为重要。通常有两种回收策略：显示内存释放和自动动态内存管理。显示内存释放由程序员负责回收使用的内存，但常出现过早回收（引发悬挂指针问题）和未释放内存（引发内存泄露问题）两大错误。此外，考虑内存分配也大大提高了编程方案的复杂性。实际中，我们常使用自动动态内存管理方案。GC 则是管理中实现回收的重要步骤。</p>
+<p>实现GC有几种经典算法，如：<strong>标记-清除算法</strong>——对所有堆中活动对象进行标记，把剩余没有标记的对象进行清除；<strong>引用计数法</strong>——每个对象记录有多少个程序在引用自己，计数为0的对象被释放；<strong>GC复制算法</strong>——将某个内存分配完的空间里的活动对象整理后，复制到另一个未被分配的活动对象，释放原内存的所有对象；<strong>GC标记-压缩算法</strong>——结合了GC标记-清除算法和复制-压缩算法，和GC标记-清除算法一样，先进行标记，然后搜索数次堆进行压缩，重新装填活动对象（不用牺牲半个堆）。</p>
+<p>具体实现GC时，为了提升回收效率，还有<strong>分代垃圾回收算法</strong>——给每个对象记录年龄，优先回收容易成为垃圾的对象；<strong>增量式垃圾回收算法</strong>——通过逐渐推进垃圾回收来控制mutator最大暂停时间。</p>
+<p>本次项目，我们准备了解探究GC的经典算法，每个算法实现一些实例，最后调研java语言中GC的具体实现策略。</p>
+<h3 id="4-1223">4. 12月23日提交</h3>
+<p><strong>任务和分工</strong>  </p>
+<p>已经完成了之前制定的任务计划：调研若干个经典算法，以及JAVA中GC的算法使用情况。具体完成效果如下：<br>
+齐炜祯：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/Algotirhms.md" target="_blank" rel="noopener">调研GC复制算法、标记压缩法、增量式垃圾回收算法</a><br>
+黄一凡：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/Algorithm%20by%20Fan.md" target="_blank" rel="noopener">调研GC标记-清除算法、引用计数法、分代垃圾回收</a><br>
+金泽文：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/notes_for_JVM.md" target="_blank" rel="noopener">调研JVM中GC算法的使用</a></p>
+<p><strong>讨论记录</strong>  </p>
+<h4 id="1223">12.23</h4>
+<p>QQ群: 30分钟 + 图书馆四楼讨论区: 40分钟<br>
+第一阶段的任务已经完成；  
+分享各自学习心得；<br>
+讨论制定接下来的目标和计划</p>
+<h4 id="1214">12.14</h4>
+<p>QQ群: 40分钟<br>
+交流了各自找到的资料；具体分配任务。</p>
+<h4 id="1213">12.13</h4>
+<p>QQ群: 40分钟<br>
+确定课题，开始准备。  </p>
+<p><strong>进展记录及问题</strong></p>
+<p>第一阶段就完成了项目简介中计划的内容；调研成果在任务分工中已经给出了链接。因此商讨下一步的研究方向。现在遇到的问题是后面的工作需要重新指定，现在确定了若干个有可能进行的希望，但是暂时不能完全确定。</p>
+<p><strong>下一步的计划</strong>  </p>
+<p>因为前面指定的计划（探索经典GC算法）已经被完成掉了，因此商讨出下面探索的方向，并会在进一步探索后具体确定。<br>
+探索方向：<br>
+1. 尝试探索JVM源码，分配任务阅读JVM的GC源码；
+2. 如果有可能，在探索JVM后，确定造JVM的小轮子或者改写or实现JVM中GC部分的难度和可行性。
+3. 探索现在最前沿的GC算法，阅读新发表的论文。
+4. 对C语言的malloc函数进行封装，并实现GC函数，为C语言提供垃圾回收机制。<br>
+<strong>后面的任务将会探索以上四个方向，并选择最合适的方向进行。</strong></p>
+<h3 id="5-13">5. 1月3日提交</h3>
+<p><strong>任务和分工</strong>  </p>
+<p>完成了对上一阶段计划的探索调研，并确定方向开始了相关工作：尝试阅读JVM的GC源码；调研实现JVM中GC轮子的难度和可行性；调研业界最前沿的GC算法，调研近些年的论文；通过封装C语言的malloc等函数，实现GC算法，为C语言提供垃圾回收机制。具体调研及完成效果如下：<br>
+齐炜祯：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/GC-state-of-the-art.md" target="_blank" rel="noopener">调研论文-Android O的GC实现</a>  、 <a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/tree/master/gcForC" target="_blank" rel="noopener">调研C语言垃圾回收的开源项目</a> 
+黄一凡：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/Java%20Garbage%20Collector.md" target="_blank" rel="noopener">调研JVM中不同种类的垃圾收集器</a><br>
+金泽文：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/notes_for_JVM.md" target="_blank" rel="noopener">进一步调研JVM中GC机制的细节</a></p>
+<p><strong>讨论记录</strong>  </p>
+<h4 id="13">1.3</h4>
+<p>QQ群: 30分钟 + 图书馆四楼讨论区: 45分钟<br>
+第二阶段的调研任务基本完成；
+分享各自调研情况；<br>
+讨论并确定、分配了最后阶段的工作任务以及方向。</p>
+<h4 id="12">1.2</h4>
+<p>QQ群: 30分钟<br>
+交流了各自的进展。</p>
+<p><strong>进展记录及问题</strong></p>
+<p>第二阶段的调研任务基本完成，四个方向都进行了基本的了解，并商讨了最后阶段的深入研究方向。：
+JVM的GC源码深入调研可行，决定进一步阅读，并深入理解；
+实现JVM的小轮子难度较大，放弃；
+调研业界最前沿的GC算法，调研近些年的相关论文，探索了近几年有关GC的论文，突破极小。基本上都是在特定的场合下优化改进传统GC算法的一些细节，调研了Android O的最新GC框架；
+调研发现对C语言的垃圾回收实现可行，决定通过开源项目进一步自行实现。</p>
+<p>之前遇到的问题基本通过本次调研得到的解决。接下来根据确定的方向进一步深入。</p>
+<p><strong>下一步的计划</strong>  </p>
+<p>结合上面的进展记录部分的结果，商讨出下面探索的方向。 探索方向：
+1. 进一步阅读JVM的GC源码，并深入理解。目标：分析到源码各个函数；<br>
+2. 通过进一步调研C语言垃圾回收的开源项目，对C语言独立实现垃圾回收机制。目标：实现C语言的简单garbage collector。</p>
+<h3 id="6-113">6. 1月13日提交</h3>
+<p><strong>任务和分工</strong>  </p>
+<p>详细分析C语言开源项目，尝试用C语言实现简单的garbage collector。阅读完JVM的shared和Serial GC模块。根据组间交流，完善了之前工作的不足，调研了Java9 GC的新特性。</p>
+<p>齐炜祯：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/gcForC.md" target="_blank" rel="noopener">C语言Garbage Collector的源代码分析</a>  、<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/tree/master/gcForC/copying" target="_blank" rel="noopener">尝试用C语言实现GC复制算法</a>、<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/tree/master/gcForC/markAndSweep" target="_blank" rel="noopener">尝试用C语言实现GC标记-清除算法</a>，写好自己之前工作的PPT</p>
+<p>黄一凡：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/Java%20Garbage%20Collector.md" target="_blank" rel="noopener">Java9 GC机制的新特性</a>，完善之前工作的不足，汇总PPT</p>
+<p>金泽文：<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/notes_for_JVM.md" target="_blank" rel="noopener">HotSpot-jdk9的GC源码分析</a>，写好自己之前工作的PPT</p>
+<p><strong>讨论记录</strong></p>
+<p><strong>1.12</strong></p>
+<p>组间交流：30分钟（QQ群）</p>
+<p>QQ群：30分钟</p>
+<p>两个组交流了各自工作进展，提出了对彼此工作的建议（记录在issue中）。组内交流了各自的进展，根据组间交流内容，完善了先前工作的不足</p>
+<p><strong>1.13</strong></p>
+<p>组间交流：60分钟（QQ群）+图书馆四楼讨论区：30分钟</p>
+<p>汇报了每个人工作的成果，讨论了presentation的汇报内容。</p>
+<p><strong>进展记录及问题</strong></p>
+<p>第三阶段的调研任务基本完成。详细分析开源C语言GC项目，尝试用C语言实现Garbage Collector（GC复制算法和标记-清除算法），基本阅读完了HotSpot-jdk9的GC部分，将理解记录在笔记里。通过组织间交流，完善了之前工作的一些不足，加深了对我们工作的理解。调研了java9 GC的新特性，为什么用G1替代CMS。</p>
+<p>在用C语言实现Garbage Collector时遇到了一些问题，记录在<a href="https://github.com/USTC-Compiler-H-Team-10/teamwork/blob/master/gcForC.md" target="_blank" rel="noopener">文档</a>中。</p>
+<p>之前的遇到的问题基本解决，并且完成了之前的计划。</p>
+<p><strong>文献及引用和参考链接</strong>  </p>
+<p><a href="https://www.amazon.cn/dp/B01JZS0AO8" target="_blank" rel="noopener">《垃圾回收的算法与实现》 【日】 中村成洋 相川光</a>  </p>
+<p><a href="https://javapapers.com/java/how-java-garbage-collection-works" target="_blank" rel="noopener">JVM的GC相关内容</a></p>
+<p><a href="https://github.com/briancain/garbage-collector" target="_blank" rel="noopener">Mark and Sweep Garbage Collector in C - GitHub开源项目</a></p>
+<p><a href="https://www.youtube.com/watch?v=iFE2Utbv1Oo" target="_blank" rel="noopener">Performance and Memory Improvements in Android Run Time (ART) (Google I/O '17) - youtube</a></p>
+<p><a href="http://blog.jobbole.com/109170/" target="_blank" rel="noopener">深入理解 Java G1 垃圾收集器</a></p>
+<p><a href="https://dl.acm.org/citation.cfm?id=1029879" target="_blank" rel="noopener">Garbage-First Garbage Collection</a></p>
+<p><a href="https://crowhawk.github.io/2017/08/15/jvm_3/" target="_blank" rel="noopener">深入理解JVM(3)——7种垃圾收集器</a></p>
+<p><a href="http://joearms.github.io/2013/04/05/concurrent-and-parallel-programming.html" target="_blank" rel="noopener">What’s the difference between concurrency and parallelism</a></p>
+<p><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html" target="_blank" rel="noopener">Getting Started with the G1 Garbage Collector</a>，<a href="http://blog.csdn.net/renfufei/article/details/41897113" target="_blank" rel="noopener">翻译文章</a></p>
+<p><a href="https://javapapers.com/java/java-garbage-collection-introduction/" target="_blank" rel="noopener">Java垃圾回收的介绍</a>    </p>
+<p><a href="https://javapapers.com/java/how-java-garbage-collection-works/" target="_blank" rel="noopener">Java垃圾回收的工作机制</a></p>
+<p><a href="https://javapapers.com/java/types-of-java-garbage-collectors/" target="_blank" rel="noopener">Java垃圾回收的类型</a>  </p>
+<p><a href="https://javapapers.com/java/java-garbage-collection-monitoring-and-analysis/" target="_blank" rel="noopener">Java垃圾回收的监测与分析</a>  </p>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/visualvm/" target="_blank" rel="noopener">Visualvm-可视化VM</a>  </p>
+<p><a href="https://book.douban.com/subject/25847620/" target="_blank" rel="noopener">HotSpot实战</a>  </p>
+<p><a href="http://www.importnew.com/17068.html" target="_blank" rel="noopener">Java堆的创建</a>   </p>
+<p><a href="https://juejin.im/post/59e969ca51882561a05a3340" target="_blank" rel="noopener">从持久代到metaspace</a>  </p>
+<p><a href="http://java-latte.blogspot.sg/2014/03/metaspace-in-java-8.html" target="_blank" rel="noopener">metaspace in java8</a>  </p><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>  
+</html>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/ustc-cs/">USTC-CS</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/编译原理和技术/">编译原理和技术</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/编译原理和技术/homework&lab-张昱/">HOMEWORK&LAB-张昱</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>TEAMWORK</li>
+        
+      
+    
+      
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDA5Ni82NjUx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/yinyang.png"
+                alt="mbinary" />
+            
+              <p class="site-author-name" itemprop="name">mbinary</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志, 宁静致远</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/mbinary" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://www.linkedin.com/in/cs-heqin-zhu" target="_blank" title="LinkedIn" rel="external nofollow"><i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://leetcode-cn.com/mbinary/" target="_blank" title="Leetcode" rel="external nofollow"><i class="fa fa-fw fa-code"></i>Leetcode</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.jianshu.com/u/a3bef26d9911" target="_blank" title="Jianshu" rel="external nofollow"><i class="fa fa-fw fa-pencil"></i>Jianshu</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes" target="_blank" title="QQ" rel="external nofollow"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhuheqin1@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/photo/index.html" title="相册" target="_blank">相册</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share-books.html" title="书籍" target="_blank">书籍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/video.html" title="影视" target="_blank">影视</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share/blogs.html" title="博客" target="_blank">博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share/tools.html" title="工具" target="_blank">工具</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">
+                    :
+                //计算机与信息类/编译原理和技术/homework&amp;lab-张昱/teamwork
+            </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">Files</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">Read Me</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number"></span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#_1"><span class="nav-number"></span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1"><span class="nav-number">0.1.</span> <span class="nav-text">1. 项目链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#_2"><span class="nav-number">0.1.1.</span> <span class="nav-text">项目主页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh-key"><span class="nav-number">0.1.2.</span> <span class="nav-text">ssh key</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">0.2.</span> <span class="nav-text">2. 成员信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">0.3.</span> <span class="nav-text">3. 项目简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1223"><span class="nav-number">0.4.</span> <span class="nav-text">4. 12月23日提交</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1223"><span class="nav-number">0.4.1.</span> <span class="nav-text">12.23</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1214"><span class="nav-number">0.4.2.</span> <span class="nav-text">12.14</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1213"><span class="nav-number">0.4.3.</span> <span class="nav-text">12.13</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-13"><span class="nav-number">0.5.</span> <span class="nav-text">5. 1月3日提交</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#13"><span class="nav-number">0.5.1.</span> <span class="nav-text">1.3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12"><span class="nav-number">0.5.2.</span> <span class="nav-text">1.2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-113"><span class="nav-number">0.6.</span> <span class="nav-text">6. 1月13日提交</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+  <span class="with-love">
+    <a href="https://github.com/mbinary"><i class="fa fa-github"></i></a>
+    <a href="mailto:zhuheqin1@gmail.com?subject=feedback"><i class="fa fa-envelope"></i></a>
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes"><i class="fa fa-qq"></i></a>
+    <a href="https://mbinary.coding.me/atom.xml"><i class="fa fa-feed"></i>
+        <span class="with-love" id="heart">(。・∀・)ノ<i class="fa fa-heart"></i></span></a>
+</span></div>
+<div> 
+  <span>
+      Host: 
+      <a class="host" href="https://mbinary.github.io"><i class="fa fa-github-alt"></i>Github</a>
+      <a class="host" href="https://mbinary.coding.me"><i class="fa fa-code"></i>Coding</a>
+  </span>
+</div>
+<div class="copyright">
+  <span>
+      <a class="theme-link" rel="external nofolow" href="https://hexo.io/themes/index.html">Hexo </a> 
+      Theme:
+      <a href="https://github.com/theme-next/hexo-theme-next">Next</a>
+  </span>
+  &nbsp;
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://ajax.cat.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+    <script type="text/javascript">
+      window.livereOptions = {
+        refer: 'ustc-cs/计算机与信息类/编译原理和技术/homework&lab-张昱/teamwork/index.html'
+      };
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3.3.0/dist/browser/pangu.min.js"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.4.2"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.4.2"></script>
+
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

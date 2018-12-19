@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/yinyang.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/yinyang.png?v=6.4.2">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.2',
+    sidebar: {"position":"left","width":350,"display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="8086 assembler tutorial for beginners (part 7)              8086 assembler tutorial for beginners (part 7)        program flow control   controlling the program flow is a very important thing, t">
+<meta property="og:type" content="website">
+<meta property="og:title" content="mbinary&#39;s blog">
+<meta property="og:url" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_07.html">
+<meta property="og:site_name" content="mbinary&#39;s blog">
+<meta property="og:description" content="8086 assembler tutorial for beginners (part 7)              8086 assembler tutorial for beginners (part 7)        program flow control   controlling the program flow is a very important thing, t">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2008-09-14T02:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mbinary&#39;s blog">
+<meta name="twitter:description" content="8086 assembler tutorial for beginners (part 7)              8086 assembler tutorial for beginners (part 7)        program flow control   controlling the program flow is a very important thing, t">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="mbinary's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_07.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | mbinary's blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">mbinary's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">15</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签云<span class="badge">47</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />时间轴<span class="badge">39</span></a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-leetcode">
+    <a href="/leetcode/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-line-chart"></i> <br />leetcode</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-ustc-cs menu-item-active">
+    <a href="/ustc-cs/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />CS课程资源</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="我来帮你找( •̀ ω •́ )✧" spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline"></h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/ustc-cs/">USTC-CS</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>DOCUMENTATION</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_07.html/">ASM_TUTORIAL_07.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <script src="/assets/js/APlayer.min.js"> </script>
+<html>
+
+<head><meta name="generator" content="Hexo 3.8.0">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><title>8086 assembler tutorial for beginners (part 7)</title>
+
+<meta name="description" content="Program Flow Control - Tutorial for Beginners"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
+
+
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><font face="Verdana" size="3">
+
+
+<font size="+1">
+<b>8086 assembler tutorial for beginners (part 7)</b>
+</font>
+
+
+
+
+<br><br>
+
+<font size="+2"><b>program flow control</b></font>
+<br><br>
+
+controlling the program flow is a very important thing, this is where
+your program can make decisions according to certain conditions.
+
+<br><br>
+
+<ul>
+
+<li><b>unconditional jumps</b><br><br>
+ The basic instruction that transfers control to another point in the program is <b>JMP</b>.
+ <br><br>
+ The basic syntax of <b>JMP</b> instruction:
+ <blockquote>
+ <font face="Fixedsys">
+ JMP <u>label</u>
+ </font>
+ </blockquote>
+
+ To declare a <i>label</i> in your program, just type its name and add "<b>:</b>"
+ to the end, label can be any character combination but it cannot start with
+ a number, for example here are 3 legal label definitions:
+ <blockquote>
+ <font face="Fixedsys">
+ label1:<br>
+ label2:<br>
+ a:
+ </font>
+ </blockquote>
+ Label can be declared on a separate line or before any other instruction, for example:
+ <blockquote>
+ <font face="Fixedsys">
+ x1:<br>
+ MOV AX, 1<br><br>
+ x2: MOV AX, 2<br>
+ </font>
+ </blockquote>
+
+ here's an example of <b>JMP</b> instruction:<br><br>
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+<font color="#000064">org</font>    100h
+
+<font color="#0000FF">mov</font>    <font color="#C80000">ax</font>, 5          <font color="#008000">; set ax to 5. </font>
+<font color="#0000FF">mov</font>    <font color="#C80000">bx</font>, 2          <font color="#008000">; set bx to 2. </font>
+
+<font color="#0000FF">jmp</font>    calc           <font color="#008000">; go to 'calc'. </font>
+
+back:  <font color="#0000FF">jmp</font> stop       <font color="#008000">; go to 'stop'. </font>
+
+calc:
+<font color="#0000FF">add</font>    <font color="#C80000">ax</font>, <font color="#C80000">bx</font>         <font color="#008000">; add bx to ax. </font>
+<font color="#0000FF">jmp</font>    back           <font color="#008000">; go 'back'. </font>
+
+stop:
+
+<font color="#0000FF">ret</font>                   <font color="#008000">; return to operating system. </font>
+
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+<br>
+
+Of course there is an easier way to calculate the some of two numbers,
+but it's still a good example of <b>JMP</b> instruction.
+
+<br>
+As you can see from this example <b>JMP</b> is able to transfer control both
+forward and backward.
+It can jump anywhere in current code segment (65,535 bytes).
+
+<br><br><br>
+
+</li>
+
+
+<li><b>Short Conditional Jumps</b><br><br>
+
+ Unlike <b>JMP</b> instruction that does an unconditional jump, there are instructions
+ that do a conditional jumps (jump only when some conditions are in act).
+ These instructions are divided in three groups, first group just test single flag, second
+ compares numbers as signed, and third compares numbers as unsigned.
+
+ <br><br>
+
+	<b>Jump instructions that test single flag</b>
+	<br><br>
+
+	<font face="Fixedsys">
+
+	<table border="1" cellpadding="7">
+	<tr>
+	<td bgcolor="yellow">Instruction</td> <td bgcolor="yellow">Description</td>
+	<td bgcolor="yellow">Condition</td>
+	<td bgcolor="yellow">Opposite Instruction</td>
+	</tr>
+
+	<tr>
+    <td>JZ , JE</td> <td>Jump if Zero (Equal).</td> <td>&nbsp;ZF = 1</td> <td>JNZ, JNE</td>
+	</tr>
+
+	<tr>
+    <td><nobr>JC , JB, JNAE</nobr></td> <td>Jump if Carry (Below, Not Above Equal).</td>
+    <td>&nbsp;CF = 1</td> <td>JNC, JNB, JAE</td>
+	</tr>
+
+	<tr>
+    <td>JS</td> <td>Jump if Sign.</td> <td>&nbsp;SF = 1</td> <td>JNS</td>
+	</tr>
+
+	<tr>
+    <td>JO</td> <td>Jump if Overflow.</td> <td>&nbsp;OF = 1</td> <td>JNO</td>
+	</tr>
+
+	<tr>
+    <td>JPE, JP</td> <td>Jump if Parity Even.</td> <td>&nbsp;PF = 1</td> <td>JPO</td>
+	</tr>
+
+
+
+	<tr>
+    <td>JNZ , JNE</td> <td>Jump if Not Zero (Not Equal).</td> <td>&nbsp;ZF = 0</td> <td>JZ, JE</td>
+	</tr>
+
+	<tr>
+    <td><nobr>JNC , JNB, JAE</nobr></td> <td>Jump if Not Carry (Not Below, Above Equal).</td>
+    <td>&nbsp;CF = 0</td> <td>JC, JB, JNAE</td>
+	</tr>
+
+	<tr>
+    <td>JNS</td> <td>Jump if Not Sign.</td> <td>&nbsp;SF = 0</td> <td>JS</td>
+	</tr>
+
+	<tr>
+    <td>JNO</td> <td>Jump if Not Overflow.</td> <td>&nbsp;OF = 0</td> <td>JO</td>
+	</tr>
+
+	<tr>
+    <td>JPO, JNP</td> <td>Jump if Parity Odd (No Parity).</td> <td>&nbsp;PF = 0</td> <td>JPE, JP</td>
+	</tr>
+
+	</table>
+
+	</font>
+
+	<br><br>
+	as you may already notice there are some instructions that do that same thing, that's correct,
+	they even are assembled into the same machine code, so it's good to remember that
+	when you compile <b>JE</b> instruction - you will get it disassembled as: <b>JZ</b>, <b>JC</b> is assembled the same as <b>JB</b> etc...<br>
+	different names are used to make programs easier to understand, to code and most importantly to remember. very offset dissembler has no clue what the original instruction was look like that's why it uses the most common name.
+
+<br><br>
+
+if you emulate this code you will see that all instructions are assembled into <b>JNB</b>, the operational code (opcode) for this instruction is <b>73h</b> this instruction has fixed length of two bytes, the second byte is number of bytes to add to the <b>IP</b> register if the condition is true. because the instruction has only 1 byte to keep the offset it is limited to pass control to -128 bytes back or 127 bytes forward, this value is always signed.
+
+
+
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+   <font color="#0000FF">jnc</font> a
+   <font color="#0000FF">jnb</font> a
+   <font color="#0000FF">jae</font> a
+
+   <font color="#0000FF">mov</font> <font color="#C80000">ax</font>, 4
+a: <font color="#0000FF">mov</font> <font color="#C80000">ax</font>, 5
+<font color="#0000FF">ret</font>
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+
+
+<br><br><br>
+
+	<b>Jump instructions for signed numbers</b>
+	<br><br>
+
+	<font face="Fixedsys">
+
+	<table border="1" cellpadding="7">
+	<tr>
+	<td bgcolor="yellow">Instruction</td> <td bgcolor="yellow">Description</td>
+	<td bgcolor="yellow">Condition</td>
+	<td bgcolor="yellow">Opposite Instruction</td>
+	</tr>
+
+	<tr>
+    <td>JE , JZ</td> <td>Jump if Equal (<font color="red">=</font>).<br>
+                           Jump if Zero.</td>
+                           <td align="Center">ZF = 1</td> <td>JNE, JNZ</td>
+	</tr>
+
+	<tr>
+    <td>JNE , JNZ</td> <td>Jump if Not Equal (<font color="red">&lt;&gt;</font>).<br>
+                           Jump if Not Zero.</td>
+                           <td align="Center">ZF = 0</td> <td>JE, JZ</td>
+	</tr>
+
+	<tr>
+    <td>JG , JNLE</td> <td>Jump if Greater (<font color="red">></font>).<br>
+                           Jump if Not Less or Equal <nobr>(<font color="red">not &lt;=</font>).</nobr></td>
+                           <td align="Center">ZF = 0<br>and<br>SF = OF</td> <td>JNG, JLE</td>
+	</tr>
+
+	<tr>
+    <td>JL , JNGE</td> <td>Jump if Less (<font color="red"><</font>).<br>
+                           Jump if Not Greater or Equal <nobr>(<font color="red">not &gt;=</font>).</nobr></td>
+                           <td align="Center">SF &lt;> OF</td> <td>JNL, JGE</td>
+	</tr>
+
+	<tr>
+    <td>JGE , JNL</td> <td><nobr>Jump if Greater or Equal (<font color="red">&gt;=</font>).</nobr><br>
+                           Jump if Not Less  (<font color="red">not &lt;</font>).</td>
+                           <td align="Center">SF = OF</td> <td>JNGE, JL</td>
+	</tr>
+
+
+	<tr>
+    <td>JLE , JNG</td> <td><nobr>Jump if Less or Equal (<font color="red">&lt;=</font>).</nobr><br>
+                           Jump if Not Greater  <nobr>(<font color="red">not &gt;</font>).</nobr></td>
+                           <td align="Center">ZF = 1<br>or<br>SF &lt;&gt; OF</td> <td>JNLE, JG</td>
+	</tr>
+
+	</table>
+
+	</font>
+
+	<br><br>
+
+	<font face="Fixedsys">&lt;&gt;</font> - sign means not equal.
+
+
+<br><br><br>
+
+	<b>Jump instructions for unsigned numbers</b>
+	<br><br>
+
+	<font face="Fixedsys">
+
+	<table border="1" cellpadding="7">
+	<tr>
+	<td bgcolor="yellow">Instruction</td> <td bgcolor="yellow">Description</td>
+	<td bgcolor="yellow">Condition</td>
+	<td bgcolor="yellow">Opposite Instruction</td>
+	</tr>
+
+	<tr>
+    <td>JE , JZ</td> <td>Jump if Equal (<font color="red">=</font>).<br>
+                           Jump if Zero.</td>
+                           <td align="Center">ZF = 1</td> <td>JNE, JNZ</td>
+	</tr>
+
+	<tr>
+    <td>JNE , JNZ</td> <td>Jump if Not Equal (<font color="red"><></font>).<br>
+                           Jump if Not Zero.</td>
+                           <td align="Center">ZF = 0</td> <td>JE, JZ</td>
+	</tr>
+
+	<tr>
+    <td>JA , JNBE</td> <td>Jump if Above (<font color="red">></font>).<br>
+                           Jump if Not Below or Equal <nobr>(<font color="red">not &lt;=</font>).</nobr></td>
+                           <td align="Center">CF = 0<br>and<br>ZF = 0</td> <td>JNA, JBE</td>
+	</tr>
+
+
+	<tr>
+    <td><nobr>JB , JNAE, JC</nobr></td> <td>Jump if Below  (<font color="red">&lt;</font>).<br>
+                           Jump if Not Above or Equal <nobr>(<font color="red">not &gt;=</font>).</nobr><br>
+                           Jump if Carry.</td>
+                           <td align="Center">CF = 1</td> <td>JNB, JAE, JNC</td>
+	</tr>
+
+
+	<tr>
+    <td><nobr>JAE , JNB, JNC</nobr></td> <td>Jump if Above or Equal (<font color="red">&gt;=</font>).<br>
+                           Jump if Not Below <nobr>(<font color="red">not &lt;</font>).</nobr><br>
+                           Jump if Not Carry.</td>
+                           <td align="Center">CF = 0</td> <td>JNAE, JB</td>
+	</tr>
+
+
+	<tr>
+    <td><nobr>JBE , JNA</nobr></td> <td>Jump if Below or Equal (<font color="red">&lt;=</font>).<br>
+                           Jump if Not Above <nobr>(<font color="red">not &gt;</font>).</nobr></td>
+                           <td align="Center">CF = 1<br>or<br>ZF = 1</td> <td>JNBE, JA</td>
+	</tr>
+
+	</table>
+
+	</font>
+
+
+	<br><br>
+	Generally, when it is required to compare numeric values <b>CMP</b> instruction
+	is used (it does the same as <b>SUB</b> (subtract) instruction, but does not keep
+	the result,	just affects the flags).<br><br>
+	The logic is very simple, for example:<br>
+	it's required to compare
+	<font face="Fixedsys">5</font> and <font face="Fixedsys">2</font>,<br>
+	<font face="Fixedsys">5 - 2 = 3</font><br>
+	the result is not zero (Zero Flag
+	is set to <font face="Fixedsys">0</font>).
+
+	<br><br>
+	Another example:<br>
+	it's required to compare <font face="Fixedsys">7</font> and
+	<font face="Fixedsys">7</font>,<br>
+    <font face="Fixedsys">7 - 7 = 0</font><br>
+    the result is zero! (Zero Flag
+	is set to <font face="Fixedsys">1</font> and <b>JZ</b> or <b>JE</b> will do the jump).
+
+	<br><br>
+ here's an example of <b>CMP</b> instruction and conditional jump:<br><br>
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+<font color="#000064">include</font> <font color="#800080">"emu8086.inc"</font>
+
+<font color="#000064">org</font>    100h
+
+<font color="#0000FF">mov</font>    <font color="#C80000">al</font>, 25     <font color="#008000">; set al to 25. </font>
+<font color="#0000FF">mov</font>    <font color="#C80000">bl</font>, 10     <font color="#008000">; set bl to 10. </font>
+
+<font color="#0000FF">cmp</font>    <font color="#C80000">al</font>, <font color="#C80000">bl</font>     <font color="#008000">; compare al - bl. </font>
+
+<font color="#0000FF">je</font>     equal      <font color="#008000">; jump if al = bl (zf = 1). </font>
+
+putc   <font color="#800080">'n'</font>        <font color="#008000">; if it gets here, then al &lt;&gt; bl, </font>
+<font color="#0000FF">jmp</font>    stop       <font color="#008000">; so print 'n', and jump to stop. </font>
+
+equal:            <font color="#008000">; if gets here, </font>
+putc   <font color="#800080">'y'</font>        <font color="#008000">; then al = bl, so print 'y'. </font>
+
+stop:
+
+<font color="#0000FF">ret</font>               <font color="#008000">; gets here no matter what. </font>
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+<br><br>
+try the above example with different numbers for <b>AL</b> and <b>BL</b>,
+open flags by clicking on flags button, use single step
+and see what happens. you can use <b>F5</b> hotkey to recompile and reload the program into the emulator.
+
+<br><br>
+
+
+<hr>
+
+<br>
+
+
+
+
+<!-- 20 -->
+
+
+
+	<b>loops</b>
+	<br><br>
+
+	<font face="Fixedsys">
+
+	<table border="1" cellpadding="7">
+	<tr>
+	<td bgcolor="yellow">instruction</td>
+	<td bgcolor="yellow" align="center">operation and jump condition</td>
+	<td bgcolor="yellow">opposite instruction</td>
+	</tr>
+
+	<tr>
+    <td>LOOP</td> <td>decrease cx, jump to label if cx not zero. </td> <td>DEC CX <font size="1" face="Verdana">and</font> JCXZ</td>
+	</tr>
+
+	<tr>
+    <td>LOOPE</td> <td>decrease cx, jump to label if cx not zero and equal (zf = 1).</td>  <td>LOOPNE</td>
+	</tr>
+
+	<tr>
+    <td>LOOPNE</td> <td>decrease cx, jump to label if cx not zero and not equal (zf = 0). </td> <td>LOOPE</td>
+	</tr>
+
+	<tr>
+    <td>LOOPNZ</td> <td>decrease cx, jump to label if cx not zero and zf = 0.</td> <td>LOOPZ</td>
+	</tr>
+
+	<tr>
+    <td>LOOPZ</td> <td>decrease cx, jump to label if cx not zero and zf = 1. </td> <td>LOOPNZ</td>
+	</tr>
+
+	<tr>
+    <td>JCXZ</td> <td>jump to label if cx is zero. </td> <td>OR CX, CX <font size="1" face="Verdana">and</font> JNZ</td>
+	</tr>
+
+
+	</table>
+
+	</font>
+
+	<br><br>
+
+	loops are basically the same jumps, it is possible to code loops without using the loop instruction, by just
+	using conditional jumps and compare, and this is just what loop does. all loop instructions use <b>CX</b> register to count steps, as you know CX register has 16 bits and the maximum value it can hold is 65535 or FFFF, however with some agility it is possible to put one loop into another, and another into another two, and three and etc... and receive a nice value of 65535 * 65535 * 65535 ....till infinity.... or the end of ram or stack memory. it is possible store original value of cx register using <b>push cx</b> instruction and return it to original when the internal loop ends with <b>pop cx</b>, for example:
+
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+<font color="#000064">org</font> 100h
+
+<font color="#0000FF">mov</font> <font color="#C80000">bx</font>, 0  <font color="#008000">; total step counter. </font>
+
+<font color="#0000FF">mov</font> <font color="#C80000">cx</font>, 5
+k1: <font color="#0000FF">add</font> <font color="#C80000">bx</font>, 1
+    <font color="#0000FF">mov</font> <font color="#C80000">al</font>, <font color="#800080">'1'</font>
+    <font color="#0000FF">mov</font> <font color="#C80000">ah</font>, 0eh
+    <font color="#0000FF">int</font> 10h
+    <font color="#0000FF">push</font> <font color="#C80000">cx</font>
+    <font color="#0000FF">mov</font> <font color="#C80000">cx</font>, 5
+      k2: <font color="#0000FF">add</font> <font color="#C80000">bx</font>, 1
+      <font color="#0000FF">mov</font> <font color="#C80000">al</font>, <font color="#800080">'2'</font>
+      <font color="#0000FF">mov</font> <font color="#C80000">ah</font>, 0eh
+      <font color="#0000FF">int</font> 10h
+      <font color="#0000FF">push</font> <font color="#C80000">cx</font>
+         <font color="#0000FF">mov</font> <font color="#C80000">cx</font>, 5
+         k3: <font color="#0000FF">add</font> <font color="#C80000">bx</font>, 1
+         <font color="#0000FF">mov</font> <font color="#C80000">al</font>, <font color="#800080">'3'</font>
+         <font color="#0000FF">mov</font> <font color="#C80000">ah</font>, 0eh
+         <font color="#0000FF">int</font> 10h
+         <font color="#0000FF">loop</font> k3    <font color="#008000">; internal in internal loop. </font>
+      <font color="#0000FF">pop</font>  <font color="#C80000">cx</font>
+      <font color="#0000FF">loop</font>  k2      <font color="#008000">; internal loop. </font>
+    <font color="#0000FF">pop</font> <font color="#C80000">cx</font>
+<font color="#0000FF">loop</font> k1             <font color="#008000">; external loop. </font>
+
+<font color="#0000FF">ret</font>
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+
+bx counts total number of steps, by default emulator shows values in hexadecimal, you can double click the register to see the value in all available bases.
+
+<br><br>
+	just like all other conditional jumps loops have an opposite companion that can help to create workarounds, when the address of desired location is too far assemble automatically assembles reverse and long jump instruction, making total of 5 bytes instead of just 2, it can be seen in disassembler as well.
+	<br><br>
+
+
+
+<br>
+
+for more detailed description and examples refer to <a href="8086_instruction_set.html"><b>complete 8086 instruction set</b></a>
+
+
+
+<!-- 20e -->
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+
+
+<hr>
+
+<br>
+All conditional jumps have one big limitation, unlike <b>JMP</b> instruction
+they can only jump <b>127</b> bytes forward and <b>128</b> bytes backward (note that most
+instructions are assembled into 3 or more bytes).
+<br><br>
+We can easily avoid this limitation using a cute trick:<br><br>
+		<ul>
+		<li>Get an opposite conditional jump instruction from the table above,
+			make it jump to <i>label_x</i>.
+			 <br><br></li>
+		<li>Use <b>JMP</b> instruction to jump to desired location.
+			 <br><br></li>
+		<li>Define <i>label_x:</i> just after the <b>JMP</b> instruction.
+			 <br><br></li>
+		</ul>
+
+		<i>label_x:</i> - can be any valid label name, but there must not be two or more labels with the same name.
+
+		<br><br>
+
+		here's an example:<br><br>
+
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+<font color="#000064">include</font> <font color="#800080">"emu8086.inc"</font>
+
+<font color="#000064">org</font>    100h
+
+<font color="#0000FF">mov</font>    <font color="#C80000">al</font>, 5
+<font color="#0000FF">mov</font>    <font color="#C80000">bl</font>, 5
+
+<font color="#0000FF">cmp</font>    <font color="#C80000">al</font>, <font color="#C80000">bl</font>     <font color="#008000">; compare al - bl. </font>
+
+
+<font color="#008000">; je equal        ; there is only 1 byte </font>
+
+
+
+<font color="#0000FF">jne</font>    not_equal  <font color="#008000">; jump if al &lt;&gt; bl (zf = 0). </font>
+<font color="#0000FF">jmp</font>    equal
+not_equal:
+
+
+<font color="#0000FF">add</font>    <font color="#C80000">bl</font>, <font color="#C80000">al</font>
+<font color="#0000FF">sub</font>    <font color="#C80000">al</font>, 10
+<font color="#0000FF">xor</font>    <font color="#C80000">al</font>, <font color="#C80000">bl</font>
+
+<font color="#0000FF">jmp</font> skip_data
+<font color="#000064">db</font> 256 dup(0)     <font color="#008000">; 256 bytes </font>
+skip_data:
+
+
+putc   <font color="#800080">'n'</font>        <font color="#008000">; if it gets here, then al &lt;&gt; bl, </font>
+<font color="#0000FF">jmp</font>    stop       <font color="#008000">; so print 'n', and jump to stop. </font>
+
+equal:            <font color="#008000">; if gets here, </font>
+putc   <font color="#800080">'y'</font>        <font color="#008000">; then al = bl, so print 'y'. </font>
+
+stop:
+
+<font color="#0000FF">ret</font>
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+</li></ul>
+
+<br><br>
+
+<font color="green">Note: the latest version of the integrated 8086 assembler automatically creates a workaround by replacing the conditional jump with the opposite, and adding big unconditional jump. To check if you have the latest version of emu8086 click <b>help-&gt; check for an update</b> from the menu.</font>
+
+<br><br>
+
+
+<hr>
+
+<br>
+Another, yet rarely used method is providing an immediate value instead
+of label. When immediate value starts with $ relative jump
+is performed, otherwise compiler calculates instruction that jumps directly
+to given offset. For example:<br><br>
+<table border="1" cellpadding="10" width="50%"><tr><td>
+
+
+<!-- START AUTOMATIC ASM TO HTML EXPORT -->
+<pre><font size="2" face="Terminal">
+<font color="#000064">org</font>    100h
+
+<font color="#008000">; unconditional jump forward: </font>
+<font color="#008000">; skip over next 3 bytes + itself  </font>
+<font color="#008000">; the machine code of short jmp instruction takes 2 bytes.  </font>
+<font color="#0000FF">jmp</font> $3<font color="#0064C8">+</font>2
+a <font color="#000064">db</font> 3    <font color="#008000">; 1 byte. </font>
+b <font color="#000064">db</font> 4    <font color="#008000">; 1 byte. </font>
+c <font color="#000064">db</font> 4    <font color="#008000">; 1 byte. </font>
+
+<font color="#008000">; conditional jump back 5 bytes: </font>
+<font color="#0000FF">mov</font> <font color="#C80000">bl</font>,9
+<font color="#0000FF">dec</font> <font color="#C80000">bl</font>      <font color="#008000">; 2 bytes. </font>
+<font color="#0000FF">cmp</font> <font color="#C80000">bl</font>, 0   <font color="#008000">; 3 bytes. </font>
+<font color="#0000FF">jne</font> $<font color="#0064C8">-</font>5     <font color="#008000">; jump 5 bytes back </font>
+
+<font color="#0000FF">ret</font>
+
+
+</font></pre>
+<!-- emu8086 version 3.27xo    -->
+<!-- STOP AUTOMATIC ASM TO HTML EXPORT -->
+
+
+</td></tr></table>
+
+
+<br><br><br>
+
+<hr>
+<center>
+<a href="asm_tutorial_06.html"><b> &lt;&lt;&lt; previous part &lt;&lt;&lt; </b></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="asm_tutorial_08.html"><b> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </b></a>
+</center>
+<hr>
+
+
+
+<br>
+
+</font><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/ustc-cs/">USTC-CS</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>DOCUMENTATION</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_07.html/">ASM_TUTORIAL_07.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDA5Ni82NjUx"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/yinyang.png"
+                alt="mbinary" />
+            
+              <p class="site-author-name" itemprop="name">mbinary</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志, 宁静致远</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/mbinary" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://www.linkedin.com/in/cs-heqin-zhu" target="_blank" title="LinkedIn" rel="external nofollow"><i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://leetcode-cn.com/mbinary/" target="_blank" title="Leetcode" rel="external nofollow"><i class="fa fa-fw fa-code"></i>Leetcode</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.jianshu.com/u/a3bef26d9911" target="_blank" title="Jianshu" rel="external nofollow"><i class="fa fa-fw fa-pencil"></i>Jianshu</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes" target="_blank" title="QQ" rel="external nofollow"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:zhuheqin1@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/photo/index.html" title="相册" target="_blank">相册</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share-books.html" title="书籍" target="_blank">书籍</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/video.html" title="影视" target="_blank">影视</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share/blogs.html" title="博客" target="_blank">博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://mbinary.coding.me/share/tools.html" title="工具" target="_blank">工具</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div>
+  <span class="with-love">
+    <a href="https://github.com/mbinary"><i class="fa fa-github"></i></a>
+    <a href="mailto:zhuheqin1@gmail.com?subject=feedback"><i class="fa fa-envelope"></i></a>
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes"><i class="fa fa-qq"></i></a>
+    <a href="https://mbinary.coding.me/atom.xml"><i class="fa fa-feed"></i>
+        <span class="with-love" id="heart">(。・∀・)ノ<i class="fa fa-heart"></i></span></a>
+</span></div>
+<div> 
+  <span>
+      Host: 
+      <a class="host" href="https://mbinary.github.io"><i class="fa fa-github-alt"></i>Github</a>
+      <a class="host" href="https://mbinary.coding.me"><i class="fa fa-code"></i>Coding</a>
+  </span>
+</div>
+<div class="copyright">
+  <span>
+      <a class="theme-link" rel="external nofolow" href="https://hexo.io/themes/index.html">Hexo </a> 
+      Theme:
+      <a href="https://github.com/theme-next/hexo-theme-next">Next</a>
+  </span>
+  &nbsp;
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="https://ajax.cat.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+    <script type="text/javascript">
+      window.livereOptions = {
+        refer: 'ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_07.html'
+      };
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+  
+    
+  
+  <script src="https://cdn.jsdelivr.net/npm/pangu@3.3.0/dist/browser/pangu.min.js"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.4.2"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.4.2"></script>
+
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

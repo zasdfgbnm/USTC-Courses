@@ -37,9 +37,9 @@ def tree(path='.',depth=2,showfile=False):
     if depth==1:
         return [mklink(path)] + [' '*4 + mklink(i) for i in items]
     else:
-        uls = [tree(i,depth-1) for i in items]
+        uls = [tree(i,depth-1,showfile) for i in items]
         ret = [' '*4 + li for ul in uls for li in ul]
         return  [mklink(path)] + ret
 
 if __name__ =='__main__':
-    print('\n'.join(tree(PATH,DEPTH)),FILE)
+    print('\n'.join(tree(PATH,DEPTH,FILE)))
