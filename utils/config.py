@@ -15,7 +15,7 @@ WALKDIR = os.path.abspath('.')
 TARDIR = '/mnt/d/blogfile/blog/source/ustc-cs'
 if not os.path.exists(TARDIR):
     TARDIR = 'docs'
-IGNORE = ['utils']
+IGNORE = ['utils','docs']
 
 HTML = '''
 
