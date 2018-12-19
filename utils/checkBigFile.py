@@ -17,7 +17,7 @@ def checkBigFile(path,size):
     gen = os.walk(os.path.abspath(path))
     for path,dirs,files in gen:
         li = path.strip(os.sep).split(os.sep)
-        if any([i[0]=='.' for i in li]):continue
+        if any([i[0]=='.' and i!='.' for i in li]):continue
         for file in files:
             filePath = os.path.join(path,file)
             sz = os.path.getsize(filePath)

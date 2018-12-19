@@ -32,8 +32,6 @@ HTML = '''
                 /{cur}
             </h2>
         </div>
-        
-        
         <h2>Directories</h2>
         <ul>
         {dirLst}
@@ -49,8 +47,9 @@ HTML = '''
         <a href="mailto:&#122;huheqin1@gmail?subject=反馈与建议" style="float:right" target="_blank" rel="external"><i class="fa fa-envelope"></i>&nbsp; Feedback</a>
         </div>
 
+        <blockquote> <p> 如果出现了 404, 说明此博客与 github repo 更新不同步, 你可以尽快联系我解决, 或者访问 github </p></blockquote>
         {readme}
-    </body>  
+    </body>
 </html>
 '''
 

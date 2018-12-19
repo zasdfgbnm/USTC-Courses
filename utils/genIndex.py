@@ -3,7 +3,7 @@ import os
 import markdown
 import shutil
 from getSize import getSize
-from config import PATH,HTML,WALKDIR,TARDIR
+from config import PATH,HTML,WALKDIR,TARDIR,IGNORE
 
 hasPinyin = False
 try:
@@ -63,7 +63,8 @@ def handleDir(target):
         dirs = pinyinSort(dirs)
         files = pinyinSort(files)
         path = path[n:].strip(os.path.sep)
-        if path.startswith('.') :continue
+        segs = path.split(os.path.sep)
+        if path.startswith('.') or any(seg in IGNORE for seg in segs) :continue
         tar = os.path.join(TARDIR ,path)
         if 'index.html' in files:
             try:shutil.copytree(path,tar)

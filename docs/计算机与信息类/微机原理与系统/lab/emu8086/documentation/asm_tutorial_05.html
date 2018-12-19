@@ -1,536 +1,82 @@
-<!DOCTYPE html>
 
+<HTML>
 
+<HEAD>
 
+<TITLE>8086 assembler tutorial for beginners (part 5)</TITLE>
 
+<META name="description" content="Library of common functions - emu8086.inc">
 
 
+</HEAD>
 
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
 
+<FONT FACE="Verdana" SIZE=3>
 
 
+<FONT SIZE=+1>
+<B>8086 assembler tutorial for beginners (part 5)</B>
+</FONT>
 
 
-  
 
+<BR><BR>
 
-<html class="theme-next pisces use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-  
-  
-  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/yinyang.png?v=6.4.2">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/yinyang.png?v=6.4.2">
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '6.4.2',
-    sidebar: {"position":"left","width":350,"display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
-
-  <meta name="description" content="8086 assembler tutorial for beginners (part 5)             8086 assembler tutorial for beginners (part 5)       Library of common functions - emu8086.inc   To make programming easier there are s">
-<meta property="og:type" content="website">
-<meta property="og:title" content="mbinary&#39;s blog">
-<meta property="og:url" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_05.html">
-<meta property="og:site_name" content="mbinary&#39;s blog">
-<meta property="og:description" content="8086 assembler tutorial for beginners (part 5)             8086 assembler tutorial for beginners (part 5)       Library of common functions - emu8086.inc   To make programming easier there are s">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2008-09-14T02:00:00.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mbinary&#39;s blog">
-<meta name="twitter:description" content="8086 assembler tutorial for beginners (part 5)             8086 assembler tutorial for beginners (part 5)       Library of common functions - emu8086.inc   To make programming easier there are s">
-
-
-
-  <link rel="alternate" href="/atom.xml" title="mbinary's blog" type="application/atom+xml" />
-
-
-
-
-  <link rel="canonical" href="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_05.html"/>
-
-
-
-<script type="text/javascript" id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title> | mbinary's blog</title>
-  
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
-
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
-
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta custom-logo">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">mbinary's blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">15</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签云<span class="badge">47</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />时间轴<span class="badge">39</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-leetcode">
-    <a href="/leetcode/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-line-chart"></i> <br />leetcode</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-ustc-cs menu-item-active">
-    <a href="/ustc-cs/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />CS课程资源</a>
-  </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="我来帮你找( •̀ ω •́ )✧" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
-</nav>
-
-
-
-  
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-            
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h2 class="post-title" itemprop="name headline"></h2>
-
-<div class="post-meta">
-  
-  
-
-
-  
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/ustc-cs/">USTC-CS</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>DOCUMENTATION</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_05.html/">ASM_TUTORIAL_05.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body han-init-context">
-        
-        
-          <script src="/assets/js/APlayer.min.js"> </script>
-<html>
-
-<head><meta name="generator" content="Hexo 3.8.0">
-
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><title>8086 assembler tutorial for beginners (part 5)</title>
-
-<meta name="description" content="Library of common functions - emu8086.inc"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-
-</head>
-
-<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
-
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><font face="Verdana" size="3">
-
-
-<font size="+1">
-<b>8086 assembler tutorial for beginners (part 5)</b>
-</font>
-
-
-
-<br><br>
-
-<font size="+2"><b>Library of common functions - emu8086.inc</b></font>
-<br><br>
+<FONT SIZE=+2><B>Library of common functions - emu8086.inc</B></FONT>
+<BR><BR>
 
 To make programming easier there are some common functions that can
 be included in your program. To make your program use functions defined
-in other file you should use the <b>INCLUDE</b> directive followed by
+in other file you should use the <B>INCLUDE</B> directive followed by
 a file name. Compiler automatically searches for the file in the same
 folder where the source file is located, and if it cannot find the file
-there - it searches in <b>Inc</b> folder.
+there - it searches in <B>Inc</B> folder.
 
-<br><br>
-Currently you may not be able to fully understand the contents of the <b>emu8086.inc</b>
-(located in <b>Inc</b> folder), but it's OK, since you only need to understand
+<BR><BR>
+Currently you may not be able to fully understand the contents of the <B>emu8086.inc</B>
+(located in <B>Inc</B> folder), but it's OK, since you only need to understand
 what it can do.
 
-<br><br>
-To use any of the functions in <b>emu8086.inc</b> you should have the following line
-in the beginning of your source file:<br><br>
+<BR><BR>
+To use any of the functions in <B>emu8086.inc</B> you should have the following line
+in the beginning of your source file:<BR><BR>
 
-<font face="Fixedsys">
+<FONT FACE="Fixedsys">
 include 'emu8086.inc'
-</font>
+</FONT>
 
 
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
-<b>emu8086.inc</b> defines the following <b>macros</b>:<br><br>
-<ul>
+<BR>
+<B>emu8086.inc</B> defines the following <B>macros</B>:<BR><BR>
+<UL>
 
-<li><b>PUTC char</b> - macro with 1 parameter, prints out an ASCII char at current cursor position.<br><br></li>
+<LI><B>PUTC char</B> - macro with 1 parameter, prints out an ASCII char at current cursor position.<BR><BR></LI>
 
-<li><b>GOTOXY col, row</b> - macro with 2 parameters, sets cursor position.<br><br></li>
+<LI><B>GOTOXY col, row</B> - macro with 2 parameters, sets cursor position.<BR><BR></LI>
 
-<li><b>PRINT string</b> - macro with 1 parameter, prints out a string.<br><br></li>
-
-
-<li><b>PRINTN string</b> - macro with 1 parameter, prints out a string.
-			The same as PRINT but automatically adds "carriage return" at the end of the string.<br><br></li>
-
-<li><b>CURSOROFF</b> - turns off the text cursor.<br><br></li>
-
-<li><b>CURSORON</b> - turns on the text cursor.<br><br></li>
+<LI><B>PRINT string</B> - macro with 1 parameter, prints out a string.<BR><BR></LI>
 
 
-</ul>
+<LI><B>PRINTN string</B> - macro with 1 parameter, prints out a string.
+			The same as PRINT but automatically adds "carriage return" at the end of the string.<BR><BR></LI>
+
+<LI><B>CURSOROFF</B> - turns off the text cursor.<BR><BR></LI>
+
+<LI><B>CURSORON</B> - turns on the text cursor.<BR><BR></LI>
+
+
+</UL>
 
 To use any of the above macros simply type its name somewhere in your code,
-and if required parameters, for example:<br><br>
+and if required parameters, for example:<BR><BR>
 
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 include emu8086.inc
 
 ORG    100h
@@ -544,82 +90,82 @@ PUTC 'B'
 
 RET               ; return to operating system.
 END               ; directive to stop the compiler.
-</font></pre>
-</td></tr></table>
+</FONT></PRE>
+</TD></TR></TABLE>
 
-<br><br>
+<BR><BR>
 
-When compiler process your source code it searches the <b>emu8086.inc</b> file
+When compiler process your source code it searches the <B>emu8086.inc</B> file
 for declarations of the macros and replaces the macro names with real code.
 Generally macros are relatively small parts of code, frequent
 use of a macro may make your executable too big (procedures are better
 for size optimization).
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
+<BR>
 
-<b>emu8086.inc</b> also defines the following <b>procedures</b>:<br><br>
-<ul>
+<B>emu8086.inc</B> also defines the following <B>procedures</B>:<BR><BR>
+<UL>
 
-<li><b>PRINT_STRING</b> - procedure to print a null terminated
+<LI><B>PRINT_STRING</B> - procedure to print a null terminated
  string at current cursor position,
- receives address of string in <b>DS:SI</b>
+ receives address of string in <B>DS:SI</B>
  register.
- To use it declare: <b>DEFINE_PRINT_STRING</b>
-  before <b>END</b> directive.<br><br></li>
+ To use it declare: <B>DEFINE_PRINT_STRING</B>
+  before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>PTHIS</b> - procedure to print a null terminated
+<LI><B>PTHIS</B> - procedure to print a null terminated
  string at current cursor position (just as PRINT_STRING),
  but receives address of string from Stack.
  The ZERO TERMINATED string should be defined just after
- the CALL instruction. For example:<br><br>
- <font face="Fixedsys">
- CALL PTHIS<br>
- db 'Hello World!', 0<br><br>
- </font>
- To use it declare: <b>DEFINE_PTHIS</b>
-  before <b>END</b> directive.<br><br></li>
+ the CALL instruction. For example:<BR><BR>
+ <FONT FACE="Fixedsys">
+ CALL PTHIS<BR>
+ db 'Hello World!', 0<BR><BR>
+ </FONT>
+ To use it declare: <B>DEFINE_PTHIS</B>
+  before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>GET_STRING</b> - procedure to get a null terminated
+<LI><B>GET_STRING</B> - procedure to get a null terminated
 string from a user, the received string is written to buffer
-at <b>DS:DI</b>, buffer size should be in <b>DX</b>.
+at <B>DS:DI</B>, buffer size should be in <B>DX</B>.
 Procedure stops the input when 'Enter' is pressed.
- To use it declare: <b>DEFINE_GET_STRING</b>
-  before <b>END</b> directive.<br><br></li>
+ To use it declare: <B>DEFINE_GET_STRING</B>
+  before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>CLEAR_SCREEN</b> - procedure to clear the screen,
+<LI><B>CLEAR_SCREEN</B> - procedure to clear the screen,
 (done by scrolling entire screen window),
 and set cursor position to top of it.
- To use it declare: <b>DEFINE_CLEAR_SCREEN</b>
-  before <b>END</b> directive.<br><br></li>
+ To use it declare: <B>DEFINE_CLEAR_SCREEN</B>
+  before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>SCAN_NUM</b> - procedure that
+<LI><B>SCAN_NUM</B> - procedure that
  gets the multi-digit SIGNED number from the keyboard,
- and stores the result in <b>CX</b> register.
- To use it declare: <b>DEFINE_SCAN_NUM</b>
- before <b>END</b> directive.<br><br></li>
+ and stores the result in <B>CX</B> register.
+ To use it declare: <B>DEFINE_SCAN_NUM</B>
+ before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>PRINT_NUM</b> - procedure that prints a signed number in <b>AX</b> register.
-To use it declare: <b>DEFINE_PRINT_NUM</b>
- <u>and</u> <b>DEFINE_PRINT_NUM_UNS</b> before <b>END</b> directive.<br><br></li>
+<LI><B>PRINT_NUM</B> - procedure that prints a signed number in <B>AX</B> register.
+To use it declare: <B>DEFINE_PRINT_NUM</B>
+ <U>and</U> <B>DEFINE_PRINT_NUM_UNS</B> before <B>END</B> directive.<BR><BR></LI>
 
-<li><b>PRINT_NUM_UNS</b> - procedure that prints out an unsigned
-number in <b>AX</b> register.
- To use it declare: <b>DEFINE_PRINT_NUM_UNS</b>
-  before <b>END</b> directive.<br><br></li>
+<LI><B>PRINT_NUM_UNS</B> - procedure that prints out an unsigned
+number in <B>AX</B> register.
+ To use it declare: <B>DEFINE_PRINT_NUM_UNS</B>
+  before <B>END</B> directive.<BR><BR></LI>
 
-</ul>
+</UL>
 
-<br>
+<BR>
 To use any of the above procedures you should first declare the
-function in the bottom of your file (but before the <b>END</b> directive), and then
-use <b>CALL</b> instruction followed by a procedure name.
-For example:<br><br>
+function in the bottom of your file (but before the <B>END</B> directive), and then
+use <B>CALL</B> instruction followed by a procedure name.
+For example:<BR><BR>
 
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 include 'emu8086.inc'
 
 ORG    100h
@@ -647,14 +193,14 @@ DEFINE_PRINT_NUM_UNS  ; required for print_num.
 DEFINE_PTHIS
 
 END                   ; directive to stop the compiler.
-</font></pre>
-</td></tr></table>
+</FONT></PRE>
+</TD></TR></TABLE>
 
-<br><br>
+<BR><BR>
 First compiler processes the declarations (these are just regular the macros
-that are expanded to procedures). When compiler gets to <b>CALL</b>
+that are expanded to procedures). When compiler gets to <B>CALL</B>
 instruction it replaces the procedure name with the address of the code
-where the procedure is declared. When <b>CALL</b> instruction is executed control
+where the procedure is declared. When <B>CALL</B> instruction is executed control
 is transferred to procedure. This is quite useful, since even if you
 call the same procedure 100 times in your code you will still have relatively
 small executable size. Seems complicated, isn't it? That's ok, with the
@@ -663,1055 +209,21 @@ basic principle.
 
 
 
-<br><br><br>
+<BR><BR><BR>
 
-<hr>
-<center>
-<a href="asm_tutorial_04.html"><b> &lt;&lt;&lt; previous part &lt;&lt;&lt; </b></a>
+<HR>
+<CENTER>
+<A HREF="asm_tutorial_04.html"><B> &lt;&lt;&lt; previous part &lt;&lt;&lt; </B></A>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="asm_tutorial_06.html"><b> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </b></a>
-</center>
-<hr>
+<A HREF="asm_tutorial_06.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+</CENTER>
+<HR>
 
 
-<br>
+<BR>
 
-</font><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</FONT>
 
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</BODY>
 
-</html>
-
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-
-  
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/ustc-cs/">USTC-CS</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>DOCUMENTATION</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_05.html/">ASM_TUTORIAL_05.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
-
-
-    
-    
-    
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDA5Ni82NjUx"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/uploads/yinyang.png"
-                alt="mbinary" />
-            
-              <p class="site-author-name" itemprop="name">mbinary</p>
-              <p class="site-description motion-element" itemprop="description">淡泊明志, 宁静致远</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">39</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">15</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/mbinary" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="http://www.linkedin.com/in/cs-heqin-zhu" target="_blank" title="LinkedIn" rel="external nofollow"><i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://leetcode-cn.com/mbinary/" target="_blank" title="Leetcode" rel="external nofollow"><i class="fa fa-fw fa-code"></i>Leetcode</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.jianshu.com/u/a3bef26d9911" target="_blank" title="Jianshu" rel="external nofollow"><i class="fa fa-fw fa-pencil"></i>Jianshu</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes" target="_blank" title="QQ" rel="external nofollow"><i class="fa fa-fw fa-qq"></i>QQ</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:zhuheqin1@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
-                  
-                </span>
-              
-            </div>
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/photo/index.html" title="相册" target="_blank">相册</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share-books.html" title="书籍" target="_blank">书籍</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/video.html" title="影视" target="_blank">影视</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share/blogs.html" title="博客" target="_blank">博客</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share/tools.html" title="工具" target="_blank">工具</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div>
-  <span class="with-love">
-    <a href="https://github.com/mbinary"><i class="fa fa-github"></i></a>
-    <a href="mailto:zhuheqin1@gmail.com?subject=feedback"><i class="fa fa-envelope"></i></a>
-    <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes"><i class="fa fa-qq"></i></a>
-    <a href="https://mbinary.coding.me/atom.xml"><i class="fa fa-feed"></i>
-        <span class="with-love" id="heart">(。・∀・)ノ<i class="fa fa-heart"></i></span></a>
-</span></div>
-<div> 
-  <span>
-      Host: 
-      <a class="host" href="https://mbinary.github.io"><i class="fa fa-github-alt"></i>Github</a>
-      <a class="host" href="https://mbinary.coding.me"><i class="fa fa-code"></i>Coding</a>
-  </span>
-</div>
-<div class="copyright">
-  <span>
-      <a class="theme-link" rel="external nofolow" href="https://hexo.io/themes/index.html">Hexo </a> 
-      Theme:
-      <a href="https://github.com/theme-next/hexo-theme-next">Next</a>
-  </span>
-  &nbsp;
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-</div>
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" title="总访客量">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="site-pv" title="总访问量">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-
-    
-	
-    
-
-    
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="https://ajax.cat.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
-
-
-
-  
-
-
-
-  
-    <script type="text/javascript">
-      window.livereOptions = {
-        refer: 'ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_05.html'
-      };
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('-1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-  
-
-  
-  
-
-  
-
-
-  
-  
-
-  
-  
-  
-    
-  
-  <script src="https://cdn.jsdelivr.net/npm/pangu@3.3.0/dist/browser/pangu.min.js"></script>
-  <script type="text/javascript">pangu.spacingPage();</script>
-
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.4.2"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.4.2"></script>
-
-
-  
-
-  
-
-  
-  <style>
-    .copy-btn {
-      display: inline-block;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 20px;
-      color: #333;
-      white-space: nowrap;
-      vertical-align: middle;
-      cursor: pointer;
-      background-color: #eee;
-      background-image: linear-gradient(#fcfcfc, #eee);
-      border: 1px solid #d5d5d5;
-      border-radius: 3px;
-      user-select: none;
-      outline: 0;
-    }
-
-    .highlight-wrap .copy-btn {
-      transition: opacity .3s ease-in-out;
-      opacity: 0;
-      padding: 2px 6px;
-      position: absolute;
-      right: 4px;
-      top: 8px;
-    }
-
-    .highlight-wrap:hover .copy-btn,
-    .highlight-wrap .copy-btn:focus {
-      opacity: 1
-    }
-
-    .highlight-wrap {
-      position: relative;
-    }
-  </style>
-  <script>
-    $('.highlight').each(function (i, e) {
-      var $wrap = $('<div>').addClass('highlight-wrap')
-      $(e).after($wrap)
-      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
-        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
-          return $(e).text()
-        }).toArray().join('\n')
-        var ta = document.createElement('textarea')
-        document.body.appendChild(ta)
-        ta.style.position = 'absolute'
-        ta.style.top = '0px'
-        ta.style.left = '0px'
-        ta.value = code
-        ta.select()
-        ta.focus()
-        var result = document.execCommand('copy')
-        document.body.removeChild(ta)
-        
-        $(this).blur()
-      })).on('mouseleave', function (e) {
-        var $b = $(this).find('.copy-btn')
-        setTimeout(function () {
-          $b.text('复制')
-        }, 300)
-      }).append(e)
-    })
-  </script>
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
+</HTML>

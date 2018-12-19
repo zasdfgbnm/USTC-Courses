@@ -1,530 +1,72 @@
-<!DOCTYPE html>
 
+<HTML>
 
+<HEAD>
 
+<TITLE>8086 assembler tutorial for beginners (part 3)</TITLE>
 
+<META name="description" content="Variables - 8086 assembler tutorial for beginners">
 
+</HEAD>
 
+<BODY bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
 
 
 
+<FONT FACE="Verdana" SIZE=3>
 
 
+<FONT SIZE=+1>
+<B>8086 assembler tutorial for beginners (part 3)</B>
+</FONT>
 
-  
 
 
-<html class="theme-next pisces use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
 
+<BR><BR>
 
-
-
-
-
-
-
-
-  
-  
-  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
-
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/yinyang.png?v=6.4.2">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/yinyang.png?v=6.4.2">
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '6.4.2',
-    sidebar: {"position":"left","width":350,"display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-  
-
-
-
-
-  <meta name="description" content="8086 assembler tutorial for beginners (part 3)              8086 assembler tutorial for beginners (part 3)        Variables   Variable is a memory location. For a programmer it is much easier to">
-<meta property="og:type" content="website">
-<meta property="og:title" content="mbinary&#39;s blog">
-<meta property="og:url" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_03.html">
-<meta property="og:site_name" content="mbinary&#39;s blog">
-<meta property="og:description" content="8086 assembler tutorial for beginners (part 3)              8086 assembler tutorial for beginners (part 3)        Variables   Variable is a memory location. For a programmer it is much easier to">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/img/tut3a.gif">
-<meta property="og:image" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/img/array.gif">
-<meta property="og:image" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/img/varview.gif">
-<meta property="og:updated_time" content="2008-09-14T02:00:00.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mbinary&#39;s blog">
-<meta name="twitter:description" content="8086 assembler tutorial for beginners (part 3)              8086 assembler tutorial for beginners (part 3)        Variables   Variable is a memory location. For a programmer it is much easier to">
-<meta name="twitter:image" content="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/img/tut3a.gif">
-
-
-
-  <link rel="alternate" href="/atom.xml" title="mbinary's blog" type="application/atom+xml" />
-
-
-
-
-  <link rel="canonical" href="https://mbinary.coding.me/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_03.html"/>
-
-
-
-<script type="text/javascript" id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title> | mbinary's blog</title>
-  
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
-
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
-
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta custom-logo">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">mbinary's blog</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-about">
-    <a href="/about/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-    <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">15</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
-    <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签云<span class="badge">47</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-    <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />时间轴<span class="badge">39</span></a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-leetcode">
-    <a href="/leetcode/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-line-chart"></i> <br />leetcode</a>
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-ustc-cs menu-item-active">
-    <a href="/ustc-cs/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />CS课程资源</a>
-  </li>
-
-      
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
-        </li>
-      
-    </ul>
-  
-
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="我来帮你找( •̀ ω •́ )✧" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
-
-
-
-    </div>
-  
-</nav>
-
-
-
-  
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-            
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h2 class="post-title" itemprop="name headline"></h2>
-
-<div class="post-meta">
-  
-  
-
-
-  
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/ustc-cs/">USTC-CS</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>DOCUMENTATION</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_03.html/">ASM_TUTORIAL_03.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body han-init-context">
-        
-        
-          <script src="/assets/js/APlayer.min.js"> </script>
-<html>
-
-<head><meta name="generator" content="Hexo 3.8.0">
-
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><title>8086 assembler tutorial for beginners (part 3)</title>
-
-<meta name="description" content="Variables - 8086 assembler tutorial for beginners"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-</head>
-
-<body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0000FF" alink="#FF0000">
-
-
-
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><font face="Verdana" size="3">
-
-
-<font size="+1">
-<b>8086 assembler tutorial for beginners (part 3)</b>
-</font>
-
-
-
-
-<br><br>
-
-<font size="+2"><b>Variables</b></font>
-<br><br>
+<FONT SIZE=+2><B>Variables</B></FONT>
+<BR><BR>
 
 Variable is a memory location. For a programmer it is much easier to have some
-value be kept in a variable named "<b>var1</b>" then at the address 5A73:235B,
+value be kept in a variable named "<B>var1</B>" then at the address 5A73:235B,
 especially when you have 10 or more variables.
 
-<br><br>
-Our compiler supports two types of variables: <b>BYTE</b> and <b>WORD</b>.
+<BR><BR>
+Our compiler supports two types of variables: <B>BYTE</B> and <B>WORD</B>.
 
-<br><br>
+<BR><BR>
 
 
-<table border="1" cellpadding="10" width="100%"><tr><td>
-Syntax for a variable declaration:<br><br>
-<i><u>name</u></i> <b>DB</b> <i><u>value</u></i><br><br>
-<i><u>name</u></i> <b>DW</b> <i><u>value</u></i><br><br>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=100%><TR><TD>
+Syntax for a variable declaration:<BR><BR>
+<I><U>name</U></I> <B>DB</B> <I><U>value</U></I><BR><BR>
+<I><U>name</U></I> <B>DW</B> <I><U>value</U></I><BR><BR>
 
-<b>DB</b> - stays for <u>D</u>efine <u>B</u>yte.<br>
-<b>DW</b> - stays for <u>D</u>efine <u>W</u>ord.<br>
-<br>
+<B>DB</B> - stays for <U>D</U>efine <U>B</U>yte.<BR>
+<B>DW</B> - stays for <U>D</U>efine <U>W</U>ord.<BR>
+<BR>
 
-<i><u>name</u></i> - can be any letter or digit combination,
+<I><U>name</U></I> - can be any letter or digit combination,
                      though it should start with a letter.
                      It's possible to declare unnamed variables
                      by not specifying the name (this variable
-                     will have an address but no name).<br><br>
-<i><u>value</u></i> - can be any numeric value in any supported
+                     will have an address but no name).<BR><BR>
+<I><U>value</U></I> - can be any numeric value in any supported
                       numbering system (hexadecimal, binary, or decimal),
-                      or "<b>?</b>" symbol for variables that are not
+                      or "<B>?</B>" symbol for variables that are not
                       initialized.
-</td></tr></table>
+</TD></TR></TABLE>
 
 
-<br><br>
-As you probably know from <i>part 2</i> of this tutorial,
-<b>MOV</b> instruction is used to copy values from source to destination.
-<br>
-Let's see another example with <b>MOV</b> instruction:
-<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+<BR><BR>
+As you probably know from <I>part 2</I> of this tutorial,
+<B>MOV</B> instruction is used to copy values from source to destination.
+<BR>
+Let's see another example with <B>MOV</B> instruction:
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 ORG 100h
 
 MOV AL, var1
@@ -534,47 +76,47 @@ RET    ; stops the program.
 
 VAR1 DB 7
 var2 DW 1234h
-</font></pre>
-</td></tr></table>
-<br>
-Copy the above code to the source editor, and press <b>F5</b> key to
+</FONT></PRE>
+</TD></TR></TABLE>
+<BR>
+Copy the above code to the source editor, and press <B>F5</B> key to
 compile it and load in the emulator.
 You should get something like:
-<br><br>
-<img src="img/tut3a.gif" width="371" height="347">
-<br><br>
+<BR><BR>
+<IMG SRC="img/tut3a.gif" WIDTH=371 HEIGHT=347>
+<BR><BR>
 As you see this looks a lot like our example, except that variables are replaced
 with actual memory locations. When compiler makes machine code, it automatically
-replaces all variable names with their <b>offsets</b>. By default segment is
-loaded in <b>DS</b> register (when <b>COM</b> files is loaded the value
-of <b>DS</b> register is set to the same value as <b>CS</b> register - code segment).
+replaces all variable names with their <B>offsets</B>. By default segment is
+loaded in <B>DS</B> register (when <B>COM</B> files is loaded the value
+of <B>DS</B> register is set to the same value as <B>CS</B> register - code segment).
 
-<br><br>
-In memory list first row is an <b>offset</b>, second row is a
-<b>hexadecimal value</b>, third row is <b>decimal value</b>, and last row is
-an <b>ASCII</b> character value.
+<BR><BR>
+In memory list first row is an <B>offset</B>, second row is a
+<B>hexadecimal value</B>, third row is <B>decimal value</B>, and last row is
+an <B>ASCII</B> character value.
 
-<br><br>
-Compiler is not case sensitive, so "<b>VAR1</b>" and "<b>var1</b>" refer to the same variable.
+<BR><BR>
+Compiler is not case sensitive, so "<B>VAR1</B>" and "<B>var1</B>" refer to the same variable.
 
-<br><br>
-The offset of <b>VAR1</b> is <b>0108h</b>, and full address is <b>0B56:0108</b>.
-<br><br>
-The offset of <b>var2</b> is <b>0109h</b>, and full address is <b>0B56:0109</b>,
-this variable is a <b>WORD</b> so it occupies <b>2 BYTES</b>.
+<BR><BR>
+The offset of <B>VAR1</B> is <B>0108h</B>, and full address is <B>0B56:0108</B>.
+<BR><BR>
+The offset of <B>var2</B> is <B>0109h</B>, and full address is <B>0B56:0109</B>,
+this variable is a <B>WORD</B> so it occupies <B>2 BYTES</B>.
 It is assumed that low byte is stored at lower address,
-so <b>34h</b> is located before <b>12h</b>.
+so <B>34h</B> is located before <B>12h</B>.
 
-<br><br>
-You can see that there are some other instructions after the <b>RET</b>
+<BR><BR>
+You can see that there are some other instructions after the <B>RET</B>
 instruction,
 this happens because disassembler has no idea about where the data starts,
 it just processes the values in memory and it understands them as
-valid 8086 instructions (we will learn them later).<br>
-You can even write the same program using <b>DB</b> directive only:
-<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+valid 8086 instructions (we will learn them later).<BR>
+You can even write the same program using <B>DB</B> directive only:
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 ORG 100h
 
 DB 0A0h
@@ -592,155 +134,155 @@ DB 7
 
 DB 34h
 DB 12h
-</font></pre>
-</td></tr></table>
-<br>
-Copy the above code to the source editor, and press <b>F5</b> key to
+</FONT></PRE>
+</TD></TR></TABLE>
+<BR>
+Copy the above code to the source editor, and press <B>F5</B> key to
 compile and load it in the emulator. You should get the same disassembled code,
 and the same functionality!
 
-<br><br>
+<BR><BR>
 As you may guess, the compiler just converts the program source to
-the set of bytes, this set is called <b>machine code</b>, processor
-understands the <b>machine code</b> and executes it.
+the set of bytes, this set is called <B>machine code</B>, processor
+understands the <B>machine code</B> and executes it.
 
-<br><br>
-<b>ORG 100h</b> is a compiler directive (it tells compiler how to
+<BR><BR>
+<B>ORG 100h</B> is a compiler directive (it tells compiler how to
 handle the source code). This directive is very important when you
 work with variables. It tells compiler that the executable file
-will be loaded at the <b>offset</b> of 100h (256 bytes), so compiler
+will be loaded at the <B>offset</B> of 100h (256 bytes), so compiler
 should calculate the correct address for all variables when
-it replaces the variable names with their <b>offsets</b>.
-Directives are never converted to any real <b>machine code</b>.<br>
-Why executable file is loaded at <b>offset</b> of <b>100h</b>? Operating
+it replaces the variable names with their <B>offsets</B>.
+Directives are never converted to any real <B>machine code</B>.<BR>
+Why executable file is loaded at <B>offset</B> of <B>100h</B>? Operating
 system keeps some data about the program in the first 256 bytes of
-the <b>CS</b> (code segment), such as command line parameters and etc.<br>
-Though this is true for <b>COM</b> files only, <b>EXE</b> files are loaded
-at offset of <b>0000</b>, and generally use special segment for variables.
-Maybe we'll talk more about <b>EXE</b> files later.
+the <B>CS</B> (code segment), such as command line parameters and etc.<BR>
+Though this is true for <B>COM</B> files only, <B>EXE</B> files are loaded
+at offset of <B>0000</B>, and generally use special segment for variables.
+Maybe we'll talk more about <B>EXE</B> files later.
 
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
+<BR>
 
-<font size="+2"><b>Arrays</b></font>
-<br><br>
+<FONT SIZE=+2><B>Arrays</B></FONT>
+<BR><BR>
 
 Arrays can be seen as chains of variables. A text string is an example of a
 byte array, each character is presented as an ASCII code value (0..255).
 
-<br><br>
-Here are some array definition examples:<br><br>
-<font face="Fixedsys">
-a DB 48h, 65h, 6Ch, 6Ch, 6Fh, 00h<br>
+<BR><BR>
+Here are some array definition examples:<BR><BR>
+<FONT FACE="Fixedsys">
+a DB 48h, 65h, 6Ch, 6Ch, 6Fh, 00h<BR>
 b DB 'Hello', 0
-</font>
+</FONT>
 
-<br><br>
-<i>b</i> is an exact copy of the <i>a</i> array, when compiler sees
+<BR><BR>
+<I>b</I> is an exact copy of the <I>a</I> array, when compiler sees
 a string inside quotes it automatically converts it to set of bytes. This
-chart shows a part of the memory where these arrays are declared:<br><br>
+chart shows a part of the memory where these arrays are declared:<BR><BR>
 
-<img src="img/array.gif" width="487" height="109">
+<IMG SRC="img/array.gif" WIDTH=487 HEIGHT=109>
 
-<br><br>
+<BR><BR>
 
 You can access the value of any element in array using square brackets,
-for example:<br>
-<font face="Fixedsys">
+for example:<BR>
+<FONT FACE="Fixedsys">
 MOV AL, a[3]
-</font>
-<br><br>
-You can also use any of the memory index registers <b>BX, SI, DI, BP</b>,
-for example:<br>
-<font face="Fixedsys">
-MOV SI, 3<br>
-MOV AL, a[SI]<br>
-</font>
+</FONT>
+<BR><BR>
+You can also use any of the memory index registers <B>BX, SI, DI, BP</B>,
+for example:<BR>
+<FONT FACE="Fixedsys">
+MOV SI, 3<BR>
+MOV AL, a[SI]<BR>
+</FONT>
 
-<br><br>
+<BR><BR>
 
-If you need to declare a large array you can use <b>DUP</b> operator.<br>
-The syntax for <b>DUP</b>:<br><br>
-<font face="Fixedsys">
-<u>number</u> DUP ( <u>value(s)</u> )
-</font>
-<br>
-<u>number</u> - number of duplicate to make (any constant value).<br>
-<u>value</u> - expression that DUP will duplicate.<br><br>
+If you need to declare a large array you can use <B>DUP</B> operator.<BR>
+The syntax for <B>DUP</B>:<BR><BR>
+<FONT FACE="Fixedsys">
+<U>number</U> DUP ( <U>value(s)</U> )
+</FONT>
+<BR>
+<U>number</U> - number of duplicate to make (any constant value).<BR>
+<U>value</U> - expression that DUP will duplicate.<BR><BR>
 
-for example:<br>
-<font face="Fixedsys">
+for example:<BR>
+<FONT FACE="Fixedsys">
 c DB 5 DUP(9)
-</font>
-<br>
-is an alternative way of declaring:<br>
-<font face="Fixedsys">
+</FONT>
+<BR>
+is an alternative way of declaring:<BR>
+<FONT FACE="Fixedsys">
 c DB 9, 9, 9, 9, 9
-</font>
-<br><br>
+</FONT>
+<BR><BR>
 
-one more example:<br>
-<font face="Fixedsys">
+one more example:<BR>
+<FONT FACE="Fixedsys">
 d DB 5 DUP(1, 2)
-</font>
-<br>
-is an alternative way of declaring:<br>
-<font face="Fixedsys">
+</FONT>
+<BR>
+is an alternative way of declaring:<BR>
+<FONT FACE="Fixedsys">
 d DB 1, 2, 1, 2, 1, 2, 1, 2, 1, 2
-</font>
-<br><br>
-Of course, you can use <b>DW</b> instead of <b>DB</b> if it's required to keep
-values larger then 255, or smaller then -128. <b>DW</b> cannot be used
+</FONT>
+<BR><BR>
+Of course, you can use <B>DW</B> instead of <B>DB</B> if it's required to keep
+values larger then 255, or smaller then -128. <B>DW</B> cannot be used
 to declare strings.
 
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
+<BR>
 
-<font size="+2"><b>Getting the Address of a Variable</b></font>
-<br><br>
+<FONT SIZE=+2><B>Getting the Address of a Variable</B></FONT>
+<BR><BR>
 
-There is <b>LEA</b> (Load Effective Address) instruction and
-alternative <b>OFFSET</b> operator. Both <b>OFFSET</b> and
-<b>LEA</b> can be used to get the offset address of the variable.<br>
-<b>LEA</b> is more powerful because it also allows you to get the address of
+There is <B>LEA</B> (Load Effective Address) instruction and
+alternative <B>OFFSET</B> operator. Both <B>OFFSET</B> and
+<B>LEA</B> can be used to get the offset address of the variable.<BR>
+<B>LEA</B> is more powerful because it also allows you to get the address of
 an indexed variables. Getting the address of the variable can be very useful
 in some situations, for example when you need to pass parameters to a procedure.
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
-<b>Reminder:</b><br>
-<font size="1">
-In order to tell the compiler about data type,<br>
-these prefixes should be used:<br><br>
-<b>BYTE PTR</b> - for byte.<br>
-<b>WORD PTR</b> - for word (two bytes).<br><br>
-For example:<br>
-<pre><font face="Fixedsys">BYTE PTR [BX]     ; byte access.
+<BR>
+<B>Reminder:</B><BR>
+<FONT SIZE=1>
+In order to tell the compiler about data type,<BR>
+these prefixes should be used:<BR><BR>
+<B>BYTE PTR</B> - for byte.<BR>
+<B>WORD PTR</B> - for word (two bytes).<BR><BR>
+For example:<BR>
+<PRE><FONT FACE="Fixedsys">BYTE PTR [BX]     ; byte access.
     or
 WORD PTR [BX]     ; word access.
-</font></pre>
-assembler supports shorter prefixes as well:<br><br>
-<b>b.</b> - for <b>BYTE PTR</b><br>
-<b>w.</b> - for <b>WORD PTR</b><br><br>
+</FONT></PRE>
+assembler supports shorter prefixes as well:<BR><BR>
+<B>b.</B> - for <B>BYTE PTR</B><BR>
+<B>w.</B> - for <B>WORD PTR</B><BR><BR>
 in certain cases the assembler can calculate the data type automatically.
-<br><br>
-</font>
-<hr>
+<BR><BR>
+</FONT>
+<HR>
 
-<br><br>
+<BR><BR>
 
 Here is first example:
-<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 ORG 100h
 
 MOV    AL, VAR1              ; check value of VAR1 by moving it to AL.
@@ -756,13 +298,13 @@ RET
 VAR1   DB  22h
 
 END
-</font></pre>
-</td></tr></table>
-<br><br>
-Here is another example, that uses <b>OFFSET</b> instead of <b>LEA</b>:
-<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<pre><font face="Fixedsys">
+</FONT></PRE>
+</TD></TR></TABLE>
+<BR><BR>
+Here is another example, that uses <B>OFFSET</B> instead of <B>LEA</B>:
+<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<PRE><FONT FACE="Fixedsys">
 ORG 100h
 
 MOV    AL, VAR1              ; check value of VAR1 by moving it to AL.
@@ -778,1165 +320,131 @@ RET
 VAR1   DB  22h
 
 END
-</font></pre>
-</td></tr></table>
-<br>
+</FONT></PRE>
+</TD></TR></TABLE>
+<BR>
 
-Both examples have the same functionality.<br><br>
-These lines:<br>
-<font face="Fixedsys">
-LEA    BX, VAR1<br>
+Both examples have the same functionality.<BR><BR>
+These lines:<BR>
+<FONT FACE="Fixedsys">
+LEA    BX, VAR1<BR>
 MOV    BX, OFFSET VAR1
-</font>
-<br>
-are even compiled into the same machine code: <font face="Fixedsys">MOV    BX, num</font><br>
-<i>num</i> is a 16 bit value of the variable offset.
+</FONT>
+<BR>
+are even compiled into the same machine code: <FONT FACE="Fixedsys">MOV    BX, num</FONT><BR>
+<I>num</I> is a 16 bit value of the variable offset.
 
-<br><br>
+<BR><BR>
 Please note that only these registers can be used
 inside square brackets (as memory pointers):
-<b>BX, SI, DI, BP</b>!<br>
+<B>BX, SI, DI, BP</B>!<BR>
 (see previous part of the tutorial).
 
 
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
-<br>
+<BR>
 
-<font size="+2"><b>Constants</b></font>
-<br><br>
+<FONT SIZE=+2><B>Constants</B></FONT>
+<BR><BR>
 
 Constants are just like variables, but they exist only until your program
 is compiled (assembled). After definition of a constant its value cannot
-be changed. To define constants <b>EQU</b> directive is used:<br><br>
-<blockquote>
-<font face="Fixedsys">
+be changed. To define constants <B>EQU</B> directive is used:<BR><BR>
+<BLOCKQUOTE>
+<FONT FACE="Fixedsys">
 name EQU &lt; any expression >
-</font>
-</blockquote>
-<br>
-For example:<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<font face="Fixedsys">
-k EQU 5<br>
-<br>
+</FONT>
+</BLOCKQUOTE>
+<BR>
+For example:<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<FONT FACE="Fixedsys">
+k EQU 5<BR>
+<BR>
 MOV AX, k
-</font>
-</td></tr></table>
-<br><br>
-The above example is functionally identical to code:<br><br>
-<table border="1" cellpadding="10" width="50%"><tr><td>
-<font face="Fixedsys">
+</FONT>
+</TD></TR></TABLE>
+<BR><BR>
+The above example is functionally identical to code:<BR><BR>
+<TABLE BORDER=1 CELLPADDING=10 WIDTH=50%><TR><TD>
+<FONT FACE="Fixedsys">
 MOV AX, 5
-</font>
-</td></tr></table>
+</FONT>
+</TD></TR></TABLE>
 
 
-<br><br>
+<BR><BR>
 
-<hr>
-<br>
+<HR>
+<BR>
 
-You can view variables while your program executes by selecting "<b>Variables</b>"
-from the "<b>View</b>" menu of emulator.
+You can view variables while your program executes by selecting "<B>Variables</B>"
+from the "<B>View</B>" menu of emulator.
 
-<br><br>
-<img src="img/varview.gif">
+<BR><BR>
+<IMG SRC="img/varview.gif">
 
-<br><br>
+<BR><BR>
 
-To view arrays you should click on a variable and set <b>Elements</b> property
+To view arrays you should click on a variable and set <B>Elements</B> property
 to array size. In assembly language there are not strict data types, so any variable
 can be presented as an array.
 
-<br><br>
-Variable can be viewed in any numbering system:<br>
-<ul>
-<li><b>HEX</b> - hexadecimal (base 16).<br></li>
-<li><b>BIN</b> - binary (base 2).<br></li>
-<li><b>OCT</b> - octal (base 8).<br></li>
-<li><b>SIGNED</b> - signed decimal (base 10).<br></li>
-<li><b>UNSIGNED</b> - unsigned decimal (base 10).<br></li>
-<li><b>CHAR</b> - ASCII char code (there are 256 symbols, some symbols are invisible).</li>
-</ul>
-<br>
+<BR><BR>
+Variable can be viewed in any numbering system:<BR>
+<UL>
+<LI><B>HEX</B> - hexadecimal (base 16).<BR></LI>
+<LI><B>BIN</B> - binary (base 2).<BR></LI>
+<LI><B>OCT</B> - octal (base 8).<BR></LI>
+<LI><B>SIGNED</B> - signed decimal (base 10).<BR></LI>
+<LI><B>UNSIGNED</B> - unsigned decimal (base 10).<BR></LI>
+<LI><B>CHAR</B> - ASCII char code (there are 256 symbols, some symbols are invisible).</LI>
+</UL>
+<BR>
 You can edit a variable's value when your program is running, simply double click it,
-or select it and click <b>Edit</b> button.
+or select it and click <B>Edit</B> button.
 
-<br><br>
+<BR><BR>
 It is possible to enter numbers in any system, hexadecimal numbers should have
-"<b>h</b>" suffix, binary "<b>b</b>" suffix, octal "<b>o</b>" suffix, decimal numbers
-require no suffix. String can be entered this way:<br>
-<b>'hello world', 0</b><br>
-(this string is zero terminated).<br><br>
-Arrays may be entered this way:<br>
-<b>1, 2, 3, 4, 5</b><br>
-(the array can be array of bytes or words, it depends whether <b>BYTE</b> or <b>WORD</b> is selected
+"<B>h</B>" suffix, binary "<B>b</B>" suffix, octal "<B>o</B>" suffix, decimal numbers
+require no suffix. String can be entered this way:<BR>
+<B>'hello world', 0</B><BR>
+(this string is zero terminated).<BR><BR>
+Arrays may be entered this way:<BR>
+<B>1, 2, 3, 4, 5</B><BR>
+(the array can be array of bytes or words, it depends whether <B>BYTE</B> or <B>WORD</B> is selected
 for edited variable).
-<br><br>
-Expressions are automatically converted, for example:<br>
-when this expression is entered:<br>
-<b>5 + 2</b><br>
-it will be converted to <b>7</b> etc...
+<BR><BR>
+Expressions are automatically converted, for example:<BR>
+when this expression is entered:<BR>
+<B>5 + 2</B><BR>
+it will be converted to <B>7</B> etc...
 
-<br><br>
+<BR><BR>
 
-<hr>
+<HR>
 
 
-<br><br><br>
+<BR><BR><BR>
 
-<hr>
-<center>
-<a href="asm_tutorial_02.html"><b> &lt;&lt;&lt; previous part &lt;&lt;&lt; </b></a>
+<HR>
+<CENTER>
+<A HREF="asm_tutorial_02.html"><B> &lt;&lt;&lt; previous part &lt;&lt;&lt; </B></A>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<a href="asm_tutorial_04.html"><b> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </b></a>
-</center>
-<hr>
+<A HREF="asm_tutorial_04.html"><B> &gt;&gt;&gt; Next Part &gt;&gt;&gt; </B></A>
+</CENTER>
+<HR>
 
-<br>
+<BR>
 
-</font><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</FONT>
 
 
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</BODY>
 
-</html>
-
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-
-  
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/ustc-cs/">USTC-CS</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/">计算机与信息类</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/">微机原理与系统</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/">LAB</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/">EMU8086</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>DOCUMENTATION</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/asm_tutorial_03.html/">ASM_TUTORIAL_03.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
-
-
-    
-    
-    
-  </div>
-
-
-          </div>
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDA5Ni82NjUx"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/uploads/yinyang.png"
-                alt="mbinary" />
-            
-              <p class="site-author-name" itemprop="name">mbinary</p>
-              <p class="site-description motion-element" itemprop="description">淡泊明志, 宁静致远</p>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">39</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">15</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/mbinary" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i>GitHub</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="http://www.linkedin.com/in/cs-heqin-zhu" target="_blank" title="LinkedIn" rel="external nofollow"><i class="fa fa-fw fa-linkedin"></i>LinkedIn</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://leetcode-cn.com/mbinary/" target="_blank" title="Leetcode" rel="external nofollow"><i class="fa fa-fw fa-code"></i>Leetcode</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.jianshu.com/u/a3bef26d9911" target="_blank" title="Jianshu" rel="external nofollow"><i class="fa fa-fw fa-pencil"></i>Jianshu</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes" target="_blank" title="QQ" rel="external nofollow"><i class="fa fa-fw fa-qq"></i>QQ</a>
-                  
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:zhuheqin1@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
-                  
-                </span>
-              
-            </div>
-          
-
-          
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/photo/index.html" title="相册" target="_blank">相册</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share-books.html" title="书籍" target="_blank">书籍</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/video.html" title="影视" target="_blank">影视</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share/blogs.html" title="博客" target="_blank">博客</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://mbinary.coding.me/share/tools.html" title="工具" target="_blank">工具</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div>
-  <span class="with-love">
-    <a href="https://github.com/mbinary"><i class="fa fa-github"></i></a>
-    <a href="mailto:zhuheqin1@gmail.com?subject=feedback"><i class="fa fa-envelope"></i></a>
-    <a href="http://wpa.qq.com/msgrd?v=3&uin=414313516&site=qq&menu=yes"><i class="fa fa-qq"></i></a>
-    <a href="https://mbinary.coding.me/atom.xml"><i class="fa fa-feed"></i>
-        <span class="with-love" id="heart">(。・∀・)ノ<i class="fa fa-heart"></i></span></a>
-</span></div>
-<div> 
-  <span>
-      Host: 
-      <a class="host" href="https://mbinary.github.io"><i class="fa fa-github-alt"></i>Github</a>
-      <a class="host" href="https://mbinary.coding.me"><i class="fa fa-code"></i>Coding</a>
-  </span>
-</div>
-<div class="copyright">
-  <span>
-      <a class="theme-link" rel="external nofolow" href="https://hexo.io/themes/index.html">Hexo </a> 
-      Theme:
-      <a href="https://github.com/theme-next/hexo-theme-next">Next</a>
-  </span>
-  &nbsp;
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
-</div>
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" title="总访客量">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-
-  
-    <span class="site-pv" title="总访问量">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-
-    
-	
-    
-
-    
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="https://ajax.cat.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.4.2"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.2"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
-
-
-
-  
-
-
-
-  
-    <script type="text/javascript">
-      window.livereOptions = {
-        refer: 'ustc-cs/计算机与信息类/微机原理与系统/lab/emu8086/documentation/asm_tutorial_03.html'
-      };
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('-1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-  
-
-  
-  
-
-  
-
-
-  
-  
-
-  
-  
-  
-    
-  
-  <script src="https://cdn.jsdelivr.net/npm/pangu@3.3.0/dist/browser/pangu.min.js"></script>
-  <script type="text/javascript">pangu.spacingPage();</script>
-
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.4.2"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.4.2"></script>
-
-
-  
-
-  
-
-  
-  <style>
-    .copy-btn {
-      display: inline-block;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 20px;
-      color: #333;
-      white-space: nowrap;
-      vertical-align: middle;
-      cursor: pointer;
-      background-color: #eee;
-      background-image: linear-gradient(#fcfcfc, #eee);
-      border: 1px solid #d5d5d5;
-      border-radius: 3px;
-      user-select: none;
-      outline: 0;
-    }
-
-    .highlight-wrap .copy-btn {
-      transition: opacity .3s ease-in-out;
-      opacity: 0;
-      padding: 2px 6px;
-      position: absolute;
-      right: 4px;
-      top: 8px;
-    }
-
-    .highlight-wrap:hover .copy-btn,
-    .highlight-wrap .copy-btn:focus {
-      opacity: 1
-    }
-
-    .highlight-wrap {
-      position: relative;
-    }
-  </style>
-  <script>
-    $('.highlight').each(function (i, e) {
-      var $wrap = $('<div>').addClass('highlight-wrap')
-      $(e).after($wrap)
-      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
-        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
-          return $(e).text()
-        }).toArray().join('\n')
-        var ta = document.createElement('textarea')
-        document.body.appendChild(ta)
-        ta.style.position = 'absolute'
-        ta.style.top = '0px'
-        ta.style.left = '0px'
-        ta.value = code
-        ta.select()
-        ta.focus()
-        var result = document.execCommand('copy')
-        document.body.removeChild(ta)
-        
-        $(this).blur()
-      })).on('mouseleave', function (e) {
-        var $b = $(this).find('.copy-btn')
-        setTimeout(function () {
-          $b.text('复制')
-        }, 300)
-      }).append(e)
-    })
-  </script>
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300,"vOffset":-30},"mobile":{"show":false,"scale":0.3,"display":{"position":"right","width":20,"height":40,"vOffset":-10}},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
-</html>
+</HTML>

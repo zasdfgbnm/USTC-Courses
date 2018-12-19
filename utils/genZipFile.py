@@ -17,7 +17,7 @@ def checkZip(name):
     return not any(li)
 
 def isIgnore(li,files):
-    return 'index.html' in files or any([i[0]=='.' or i.startswith('__') or i in IGNORE for i in li])
+    return 'index.html' in files or any((i[0]=='.' and i!='.') or i.startswith('__') or i in IGNORE for i in li)
 def genZipFile(tar = WALKDIR,rewrite=False):
     os.chdir(tar)
     n = len(tar)
