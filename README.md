@@ -29,12 +29,11 @@
 
 # [资料下载](https://mbinary.coding.me/ustc-cs/)
 
-大家可以在 github 浏览下面的目录下载, 也可以通过浏览[这里的网页](https://mbinary.coding.me/ustc-cs/)下载资料. 后者可 以解决 github 的如下不好体验
+大家可以在 github 浏览下面的目录, 也可以通过浏览[这里的网页](https://mbinary.coding.me/ustc-cs/)下载资料. 后者可 以解决 github 的如下不好体验
 
 * 慢
 * 如果想下载二进制文件, 在github 需要点击两次(第一次显示`This file is binary and cannot be displayed inline`,需要再点`open binary file`/`Download`才行), 而在文件浏览版只需要一次即可下载
-* 对于大的二进制文件, github 移动端的不能直接下载,如下, 需要切换成 `Desktop Version` 才有 下载按钮, 很麻烦.
-![](docs/src/can-not-open-bin.jpg)
+* 对于大的二进制文件, github 移动端的不能直接下载, 需要切换成 `Desktop Version` 才有 下载按钮.
 
 # [贡献者们](https://github.com/mbinary/USTC-CS-Courses-Resource/graphs/contributors)
 
@@ -127,7 +126,6 @@
         * [Web-信息处理与应用](./计算机与信息类/Web-信息处理与应用)
         * [微机原理与系统](./计算机与信息类/微机原理与系统)
         * [物联网导论](./计算机与信息类/物联网导论)
-    * [其他](./其他)
     * [人文社科类](./人文社科类)
         * [交响乐赏析](./人文社科类/交响乐赏析)
         * [技术,财富与文明变迁](./人文社科类/技术,财富与文明变迁)
@@ -143,6 +141,7 @@
         * [线性代数B1](./数学类/线性代数B1)
         * [运筹学基础](./数学类/运筹学基础)
     * [utils](./utils)
+    * [网盘资源](./网盘资源)
     * [物理类](./物理类)
         * [电磁学](./物理类/电磁学)
         * [光学与原子物理](./物理类/光学与原子物理)
