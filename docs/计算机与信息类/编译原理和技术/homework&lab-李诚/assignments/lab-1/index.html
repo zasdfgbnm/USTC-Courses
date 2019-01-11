@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://mbinary0.github.io/resource/github.markdown.css" rel="stylesheet">
+  </head>
+  <body>
+     	<div><h2>
+                <a href="../index.html">&nbsp;&nbsp;<i class="fa fa-level-up"></i>&nbsp;&nbsp;</a>:
+                /<a href="../../../../../index.html"><i class="fa fa-home"></i></a>/<a href="../../../../index.html">计算机与信息类</a>/<a href="../../../index.html">编译原理和技术</a>/<a href="../../index.html">homework&lab-李诚</a>/<a href="../index.html">assignments</a>/<a href="index.html">lab-1</a>
+            </h2>
+        <div><span> 根据拼音排序</span></div>
+        </div>
+        <h2>Directories</h2>
+        <ul>
+        <li><i class="fa fa-meh-o"></i>&nbsp;None</li>
+        </ul>
+
+        <h2>Files</h2>
+        <ul>
+        <li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-李诚/assignments/lab-1/README.md"><i class="fa fa-pencil-square-o"></i>&nbsp;README.md---(13.33K)</a></li>
+<li><a href="https://raw.githubusercontent.com/mbinary/USTC-CS-Courses-Resource/master/计算机与信息类/编译原理和技术/homework&lab-李诚/assignments/lab-1/README.pdf"><i class="fa fa-file-pdf-o"></i>&nbsp;README.pdf---(149.74K)</a></li>
+        </ul>
+
+        <div style="text-decration:underline;display:inline">
+        <a href="https://github.com/mbinary/USTC-CS-Courses-Resource.git" target="_blank" rel="external"><i class="fa fa-github"></i>&nbsp; Github</a>
+        <a href="mailto:&#122;huheqin1@gmail?subject=反馈与建议" style="float:right" target="_blank" rel="external"><i class="fa fa-envelope"></i>&nbsp; Feedback</a>
+        </div>
+
+        <blockquote> <p> 如果出现了 404, 说明此博客与 github repo 更新不同步, 你可以尽快联系我解决, 或者访问 github </p></blockquote>
+        <h1 style="color:red;text-align:center;">Read Me</h1>
+
+<h1 id="lab-1-lexical-analysis">Lab 1 Lexical Analysis</h1>
+<h2 id="1-goal">1 Goal</h2>
+<p>You are given:
+1. A public repository of a incomplete project on Gitlab. The URL is http://210.45.114.146:880/staff/pl0compiler.
+2. This Guide.</p>
+<p>After this project, you should:
+1. Learn to cooperate with Git
+2. Complete a small lexical analyzer for PL/0 language with other members in your group.
+3. Write a report for your participation and contributions.</p>
+<h2 id="2-contents">2 Contents</h2>
+<h3 id="21-pl0-language-tokens">2.1 PL/0 language tokens</h3>
+<p>Tokens in PL/0 are divided into 4 types: <code>identifiers</code>, <code>numbers</code>, <code>symbols</code> and <code>reserved words</code>.</p>
+<h4 id="211-identifiers">2.1.1 Identifiers</h4>
+<p>Identifiers are strings which programmers define to represent variable and procedure names. In PL/0, there are no restrictions for the identifiers. However, arbitary names for variables and procedures may lead to unpredictable results. You are <strong>REQUIRED</strong> to ensure that identifiers, which are accepted by the lexical analysis module, contains <strong>ONLY LITERAL LETTERS, NUMBERS AND UNDERLINE(_)</strong>. Furthermore, numbers <strong>SHOULD NOT</strong> be the first character of an identifier.</p>
+<blockquote>
+<p>You can refer to C programming language if you do not know how to understand this.</p>
+</blockquote>
+<h4 id="212-numbers">2.1.2 Numbers</h4>
+<p>Numbers in PL/0 are <strong>ALWAYS</strong> integers ranging <strong>from -999999999 to 999999999</strong> (which can be easier to be represented in C). However, in lexical analyzer integers are recognized as unsigned integers ranging <strong>from 0 to 999999999</strong>. The sign <code>-</code> should be recognized as a symbol (which means "minus").</p>
+<h4 id="213-symbols">2.1.3 Symbols</h4>
+<p>Symbols accepted are: <code>+ - * / = != &lt; &lt;= &gt; &gt;= ( ) , ; . :=</code>.</p>
+<p><code>+ - * /</code> means 4 basic arithmetic operations. <code>=</code> here, which does not means assignment to variables (The correct choice is <code>:=</code>), together with <code>!= &lt; &lt;= &gt; &gt;=</code> are comparison operators. <code>( )</code> are parentheses. Other symbols are punctuations. </p>
+<h4 id="214-reserved-words">2.1.4 Reserved Words</h4>
+<p>Reserved words are here: <code>var</code>, <code>const</code>, <code>procedure</code>, <code>begin</code>, <code>end</code>, <code>if</code>, <code>then</code>, <code>do</code>, <code>while</code>, <code>call</code>, <code>odd</code>. <strong>Case sensitive</strong>.</p>
+<h4 id="215-comments">2.1.5 Comments</h4>
+<p>Comments are dropped in lexical analysis stage. They are not regarded as tokens.</p>
+<p>Line comments starts with double slash (<code>//</code>), on the right of which <strong>in this line</strong> any input source code are dropped. You should read from left to right for each line. Whenever <code>//</code> is detected, no more words need to be read.</p>
+<p>Block comments starts with <code>/*</code> and ends with <code>*/</code>. Whenever <code>/*</code> is detected, all the words read are comments and should be dropped, until the next <code>*/</code> is read. An unterminated <code>/*</code> should be reported as an error, while an unexpected <code>*/</code> should be recognized as two tokens (<code>*</code> and <code>/</code>). For example, the following source code does not mean <code>more words</code> as a comment:</p>
+<div class="codehilite"><pre><span></span><span class="cm">/* var x; */</span><span class="w"> </span>more<span class="w"> </span>words<span class="w"> </span><span class="o">*/</span><span class="w"></span>
+</pre></div>
+
+
+<p>In this case, the words in <code>more words</code> should not be dropped, and the last two characters <code>*/</code> should be recognized as token <code>*</code> and token <code>/</code> here. </p>
+<p>In the code above, when the first <code>*/</code> is detected right after <code>var x;</code>, the comment ends. The second <code>*/</code> near the end of the line is invalid and should be reported. (More talk is <a href="https://groups.google.com/forum/?utm_medium=email&amp;utm_source=footer#!msg/compiler-principle-2018-ustc/6xzc8K2gxIw/WupajqwPBgAJ">here</a>.)</p>
+<h4 id="216-splitting">2.1.6 Splitting</h4>
+<p>Tokens are recommended to be splitted by <code>' '</code>, <code>'\t'</code> and <code>'\n'</code>. However, this is not required. Splitting of tokens follows:
+1. Symbols can always closely stand by other tokens (including other symbols). The longest match principle is used when multiple symbols is together.</p>
+<blockquote>
+<p><code>a+b</code> should be recognized as three tokens: identifier <code>a</code>, symbol <code>+</code> and identifier <code>b</code>.
+2. Numbers are not accepted when next to identifiers and reserved words as token type "number" here.
+    2.1. Numbers cannot appear before reserved words and identifiers without splitters. This should reported as an error.
+    2.2. Numbers can appear in identifiers with literal letters (cannot be the first character in the identifier).
+3. Identifiers and reserved keywords are regarded as words. Words <strong>MUST</strong> be splitted.</p>
+</blockquote>
+<h3 id="22-pl0-compiler-architecture">2.2 PL/0 Compiler Architecture</h3>
+<p>The PL/0 compiler follows the 4 phases of compilation: lexical analysis, syntax analysis, semantic analysis, code generation. The 4 parts are designed to be 4 modules to make up for the entire compiler. In this experiment, we are only concerned with its lexical analysis, thus we only focus on the lexical analyzer module.</p>
+<h4 id="221-project-files">2.2.1 Project files</h4>
+<p>The project manages files by CMAKE (Minimum version is 2.8). Files are arranged as below:</p>
+<div class="codehilite"><pre><span></span>(root directory)
+-- + pl0compiler
+   ├ -- + common
+   │    ├ --   CMakeLists.txt  (for cmake in subdirectory)
+   │    ├ --   common.c  (implementation of functions in common.h)
+   │    └ --   common.h  (initial structure for the whole compiler, declaration for global variables)
+   ├ -- + examples  (different examples for PL/0 program)
+   ├ -- + lex
+   │    ├ --   CMakeLists.txt  (for cmake in subdirectory)
+   │    ├ --   pl0_lex.c  (implementation of functions in pl0_lex.h)
+   │    └ --   pl0_lex.h  (lexical analyzer)
+   ├ --   .gitignore
+   ├ --   CMakeLists.txt  (for cmake)
+   ├ --   README.md
+   ├ --   do_cmake.sh  (shell script for automatically do cmake)
+   └ --   test.c  (for testing)
+</pre></div>
+
+
+<h4 id="222-lexical-analyzer-workflow">2.2.2 Lexical analyzer workflow</h4>
+<p>First we dive into <code>pl0_lex.h</code> to see the structure of the analyzer.</p>
+<div class="codehilite"><pre><span></span>50  typedef struct _tPL0Lex {
+51      /* Parent return pointer */
+52      struct _tPL0Compiler * compiler;
+53
+54      /* For output */
+55      PL0TokenType last_token_type;
+56      char last_id[MAX_ID_LEN + 1];
+57      int last_num;
+58
+59      /** --------------------------
+60       * TODO: Your variables here
+61       */
+62  } PL0Lex;
+</pre></div>
+
+
+<p>The first pointer <code>compiler</code> is used to link back to the compiler which contains the lexical analyzer. It does not matter much in this project.</p>
+<p>The next 3 variables are very important, which play the key roles in token streams for the syntax analyzer. As you should know, the interface exposed by the lexical analyzer to the syntax analyzer is <code>get_token()</code>. The syntax analyzer invokes <code>get_token()</code> function and then fetches a token from the lexical analyzer. Each token is either an identifier, a number, a symbol or a reserved keyword. That is, a token should have its <em>TYPE</em>. Then how do we represent a token?</p>
+<p>The <code>last_token_type</code> variable holds the type for the last token read. We defined 32 token types here. <strong>Each symbol and reserved keyword has its own type here</strong>.</p>
+<p>The <code>last_id</code> variable contains the string for the last identifier read. The maximum length for an identifier is 10 bytes. <strong>It is valid ONLY IF the last token read is an identifier</strong>.</p>
+<p>The <code>last_num</code> variable is similar to <code>last_id</code>. We use a C-style integer to represent the last number read. <strong>Remember also it is valid ONLY IF the last last token read is a number</strong>.</p>
+<blockquote>
+<p>As we mentioned above, the valid range for a number is 0 to 999999999. That is, the length ofa number is <strong>no more than 9</strong>.</p>
+</blockquote>
+<p>Now when the function <code>get_token</code> is invoked, the three variables should be set <strong>(This is for you to implement)</strong>. The syntax analyzer recognizes each token by first distinguishing the <code>last_token_type</code> variable.</p>
+<p>If this variable is set to <code>TOKEN_IDENTIFIER</code>, then the token is an identifier. The <code>last_id</code> variable contains the name for the identifier.</p>
+<p>If this variable is set to <code>TOKEN_NUMBER</code>, then the token is a number, whose value is set in <code>last_num</code>.</p>
+<p>In other cases, a token is a symbol or a reserved keyword. If a keyword is recognized, the <code>last_token_type</code> is set to a value larger than <code>TOKEN_RESWORDS</code>. The syntax analyzer is able to tell if is in this case by simply comparing the two values. Vice versa for <code>TOKEN_SYMBOL</code>.</p>
+<blockquote>
+<p>Variables in enumeration of C is automatically arranged by the ascending order of natural numbers (0, 1, 2, 3, ...). As a result, values of enumeration items can be compared.</p>
+</blockquote>
+<p>Last but not least, if the source code contains lexical errors, the lexical analyzer set the <code>last_token_type</code> to <code>TOKEN_NULL</code> when the error is read.</p>
+<h4 id="223-implementation-of-lexical-module">2.2.3 Implementation of lexical module</h4>
+<p>The function for <code>get_token()</code> is <code>PL0Lex_get_token</code>, which accepts 1 parameter (the pointer of a lexical analyzer). The return value is boolean, <code>TRUE</code> for successfully read, <code>FALSE</code> for failures (In most cases, it means the end of the source code file, otherwise it should be I/O errors).</p>
+<blockquote>
+<p>This function should return <code>TRUE</code> EVEN IF an invalid token is read. When this happens, the invoker knows the problem when it finds the <code>last_token_type</code> is set to <code>TOKEN_NULL</code>.
+In later experiments, we will handle errors. Now when you find errors in the source code file, just print it out in the standard output.</p>
+</blockquote>
+<p>This function is <strong>for you to implement</strong>. Tips: remember to <strong>drop the comments</strong> (Refer to section 2.1.5 for details).</p>
+<p>Furthermore, location should be detected for each token. A token can be described by its <strong>line number</strong> and <strong>the index of its first and last letter</strong> in the line. For example, in the PL/0 program below:</p>
+<div class="codehilite"><pre><span></span>var a;
+begin
+    a := -1;
+end.
+</pre></div>
+
+
+<p>The first token is <code>var</code>. Then <code>last_token_type</code> should be set to <code>TOKEN_VAR</code>. Now we need more variables for the location of the token (line number is 1 and location in the line is 0 to 2). <strong>THIS IS FOR YOU TO IMPLEMENT</strong>. Add variables to lexical analyzer structure and make it!</p>
+<h4 id="224-constants-list">2.2.4 Constants list</h4>
+<p>You are offered two lists of constants (declared in <code>pl0_lex.h</code> and defined in <code>pl0_lex.c</code>), which contains the strings of reserved words and symbols. What's more, the lists follows the same order for the token types in the type enumeration. The index of the list is useful when a token is detected as a reserved word or a symbol and should set the <code>last_token_type</code> variable.</p>
+<h4 id="225-testing-part">2.2.5 Testing part</h4>
+<p>A snippet is pre-defined to help you test your implementation of lexical analyzer (written as <code>test.c</code>. Dive in and modify as you like.</p>
+<p>The default program does not accept invalid tokens (when the <code>last_token_type</code> is set to <code>TOKEN_NULL</code>. Change it if necessary.</p>
+<p>The location of each token is not shown by default. <strong>You need to implement this depending on your data structure of your lexical analyzer</strong>. The preferred style of output is <code>(line number):(first letter index)-(last letter index)</code>. For the given program in section 2.2.3, the output should be:</p>
+<div class="codehilite"><pre><span></span><span class="nt">Reserved</span> <span class="nt">word</span><span class="o">:</span>  <span class="nt">var</span>     <span class="nt">1</span><span class="p">:</span><span class="nd">0-2</span>
+<span class="nt">Identifier</span><span class="o">:</span>     <span class="nt">a</span>       <span class="nt">1</span><span class="p">:</span><span class="nd">4-4</span>
+<span class="nt">Symbol</span><span class="o">:</span>         <span class="o">;</span>       <span class="nt">1</span><span class="p">:</span><span class="nd">5-5</span>
+<span class="nt">Reserved</span> <span class="nt">word</span><span class="o">:</span>  <span class="nt">begin</span>   <span class="nt">2</span><span class="p">:</span><span class="nd">0-4</span>
+<span class="o">...</span>
+</pre></div>
+
+
+<blockquote>
+<p>Alignments is optional but recommended. </p>
+</blockquote>
+<h3 id="23-cooperating-with-git">2.3 Cooperating with Git</h3>
+<p>Now it is the first time for all the members to cooperate in your team.</p>
+<h4 id="231-leader-creating-your-groups-fork">2.3.1 LEADER: Creating your group's fork</h4>
+<p><strong>Only leaders of all the groups need to do this part.</strong></p>
+<p>First open the public project URL (http://210.45.114.146:880/staff/pl0compiler) in your browser. <strong>Make sure you are logged in</strong> before doing anything.</p>
+<p>Now click <code>Fork</code> button on the main panel. Then you are asked to select a namespace. Choose your group and wait. When the progress is finished, it will appear on the screen.</p>
+<h4 id="232-branching">2.3.2 Branching</h4>
+<p>It is not recommended to directly commit on the <em>master</em> branch. Use your own branches to develop.</p>
+<p>Once the project is forked into your group's namespace, all members of your team will find it under the "Your projects" section. First you should clone the remote repository onto your host with <code>git clone</code>. The cloning URL can be found on the web pages on the server.</p>
+<p>Once you have cloned to your computer, do not make changes to the master branch of the source code directly. Use your own branches with <code>git branch</code> and <code>git checkout</code> to shift to your branch to work. This helps when multiple people works in parallel.</p>
+<h4 id="233-committing">2.3.3 Committing</h4>
+<p><strong>NEVER</strong> regard commits as saving of your progress. A commit should be checkpoints of your work, that is, a commit should be a snapshot of output of a working stage. For example, part of work is done, or is decided to be delayed.</p>
+<p>When a commit is decided to happen, make sure the codes are clear and graceful. Maybe there are BUGS or the codes are incomplete, it's OK. Do not leave the codes in a mess when committing, even if you decide to stop working. In the future, a rollback may happen, and others (or even yourself) will be confused by messy source code. </p>
+<h4 id="234-merging">2.3.4 Merging</h4>
+<p>When the work on your branch is done, you need to merge your branch onto the <em>master</em> branch.</p>
+<p>If your role is <em>maintainer</em> or higher in the group, you are able to directly push to the <em>master</em> branch. In this case, merge your branch to the local <em>master</em> branch, then push to the remote repository.</p>
+<p>If your role is <em>developer</em> in your group, then you cannot push to <em>master</em> branch, since the branch is <strong>protected</strong> by default. You have to start a merge request on the web pages.</p>
+<h2 id="3-instructions-for-lab-1">3 Instructions for lab 1</h2>
+<ol>
+<li><strong>(LEADER)</strong> Create your group's fork repository of the public repository.</li>
+<li>Each group need to read the guide, especially section 2.2.3. The output should meet the requirement in section 2.2.5.</li>
+<li>Each member in the group shares part of work and complete.</li>
+<li>Finally the project contains the full implementation, with no errors or bugs, which gives a valid output of any input source code file of PL/0.</li>
+<li>
+<p>Create a directory in the repository with name <code>docs</code>, then create a subdirectory <code>lab-1</code>. <strong>Everyone</strong> writes his own report for this project <strong>with a markdown file</strong> describing his own work and problems. Each markdown file should be named with the student ID of each member (e.g. <code>PB16XXXXXX.md</code>).</p>
+<blockquote>
+<p>Each problem should be described as follows: what it is and how it happens, the possible solutions, how you work to make it done, and what you have learnt.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>(LEADER)</strong> Remember to describe how your team cooperate in the project in your own report.</p>
+</li>
+</ol>
+    </body>
+</html>
