@@ -1,5 +1,0 @@
-PUT 1
-PUT 0
-OR
-INT 0
-INT 1
