@@ -173,7 +173,7 @@ void cannon::attack(int *p)
     float minD = MAXLENGTH *2;
     for(int i = 0; i<ant::curN; ++i)
     {
-        //曾未传递p，将条件设为! ants[i].isDead(), wrong, waste lots of time
+        //未p为! ants[i].isDead(), wrong, waste lots of time
         float d = dis(ants[p[i]].x,ants[p[i]].y);
         if(d <= span&&d < minD)
         {

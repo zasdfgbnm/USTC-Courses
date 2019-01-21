@@ -187,7 +187,7 @@ void cannon::attack()
     float minD = MAXLENGTH *2;
     for(int i = 0; i<ant::total; ++i)
     {
-        if(in(i))    //将条件设为! ants[i].isDead(), wrong, waste lots of time
+        if(in(i))    //为! ants[i].isDead(), wrong, waste lots of time
         {
             float d = dis(ants[i].x,ants[i].y);
             if(d <= span&&d < minD)

@@ -141,7 +141,7 @@ int move()
                 int pn = cantor(cur -> s);
                 if(flag[pn] != 2){
                     cur -> g += 1;
-                    cur->last = (2+i)%4;  //下一次不能返回,即移动（2+i）%4
+                    cur->last = (2+i)%4;  //一尾芊,贫2+i%4
                     int delta = table[8 - cur -> s[p] + '0'][p] + table[8][cur -> zero] \
                                 - table[8 - cur -> s[p] + '0'][cur -> zero] - table[8][p];
                     cur -> h += delta;
