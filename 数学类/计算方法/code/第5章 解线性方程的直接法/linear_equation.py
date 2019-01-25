@@ -4,7 +4,7 @@
     > File Name: doolittle.py
     > Author: mbinary
     > Mail: zhuheqin1@gmail.com 
-    > Blog: https://mbinary.github.io
+    > Blog: https://mbinary.xyz
     > Created Time: 2018-04-20  08:32
  ************************************************************************'''
 
