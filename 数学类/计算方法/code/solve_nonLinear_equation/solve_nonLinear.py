@@ -2,7 +2,7 @@
 # File : sol_nonLinear.py
 # Author: mbinary
 # Mail: zhuheqin1@gmail.com
-# Blog: https://mbinary.github.io
+# Blog: https://mbinary.xyz
 # Github: https://github.com/mbinary
 # Created Time: 2018-05-20  09:31
 # Description: 

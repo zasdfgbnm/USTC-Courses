@@ -3,7 +3,7 @@
     > Author: mbinary
     > Mail: zhuheqin1@gmail.com 
     > Created Time: Sat 07 Apr 2018 09:55:25 PM DST
-    > Blog: https://mbinary.github.io
+    > Blog: https://mbinary.xyz
  ************************************************************************'''
 
 import re

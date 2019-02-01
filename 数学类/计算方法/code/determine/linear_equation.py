@@ -2,7 +2,7 @@
 # File : linear_equation.py
 # Author: mbinary
 # Mail: zhuheqin1@gmail.com
-# Blog: https://mbinary.github.io
+# Blog: https://mbinary.xyz
 # Github: https://github.com/mbinary
 # Created Time: 2018-05-20  08:36
 # Description:   书上p186 附录1 程序11

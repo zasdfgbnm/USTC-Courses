@@ -78,7 +78,7 @@ int move()
                 int pn = cantor(tail -> s);
                 if(flag[pn] == 0){
                     tail -> g += 1;
-                    tail->last = (2+i)%4;  //下一次不能返回,即移动（2+i）%4
+                    tail->last = (2+i)%4;  //一尾芊,贫2+i%4
                     ++tail;
                     flag[pn] = 1;
                 }

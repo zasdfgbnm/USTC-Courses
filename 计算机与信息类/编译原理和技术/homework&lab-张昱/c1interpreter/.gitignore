@@ -1,6 +1,0 @@
-.vscode
-build
-src/grammar/*
-!src/grammar/*.g4
-!src/grammar/*.sh
-!src/grammar/*.ps1

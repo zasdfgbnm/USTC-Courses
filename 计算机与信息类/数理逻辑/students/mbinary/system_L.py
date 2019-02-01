@@ -215,11 +215,9 @@ class  system_L:
         left = contain(non(p),non(q))
         right = contain(p,q)
         return contain(left,right)
-    
     def genFormula(self,s:str)->formula:
         s=s.replace('~~','')  #  simplify the deduction,  to do
-		s=s.replace('<->','-')
-		# to do
+	s=s.replace('<->','-')
         s=s.replace('->','>')
         li = re.findall(r'[\(\)\>\~]|\w+',s)
         li = [sympy.Symbol(i) for i in li]
