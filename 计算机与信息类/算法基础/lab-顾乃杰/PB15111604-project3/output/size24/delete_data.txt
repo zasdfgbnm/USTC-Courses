@@ -1,2 +1,0 @@
-key:10463, color:black, size: 9
-key: 5524, color:black, size: 1

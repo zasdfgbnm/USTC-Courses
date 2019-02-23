@@ -1,2 +1,0 @@
-Time to delete node 60/3:      5000 nanoseconds.
-Time to delete node 59/4:      6000 nanoseconds.
